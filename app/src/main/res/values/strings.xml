@@ -7,7 +7,7 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">PK Songs</string>
+    <string name="app_name">Nigerian Movies</string>
 
     <string-array name="query_duration">
         <item>long</item> <!-- this is search -->
