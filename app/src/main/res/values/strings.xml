@@ -10,38 +10,38 @@ search : videos?q=hooman majd
     <string name="app_name">PK Songs</string>
 
     <string-array name="query_duration">
-        <item></item> <!-- this is search -->
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
+        <item>long</item> <!-- this is search -->
+        <item></item>
+        <item>long</item>
+        <item>long</item>
+        <item>long</item>
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
-        <item>dailyvideos?q=pk songs</item>
-        <item>videos?q=new pk music</item>
-        <item>videos?q=old pk songs</item>
-        <item>videos?q=pk songs</item>
+        <item>nigerian </item> <!-- this is search -->
+        <item>videos?q=nigerian new movies</item>
+        <item>videos?q=nigerian movies trailer</item>
+        <item>videos?q=nigerian old movies</item>
+        <item>videos?q=nigerian movies</item>
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
         <item>Search Results</item>
-        <item>Daily Digest</item>
-        <item>New</item>
-        <item>Old</item>
+        <item>New Movies</item>
+        <item>Trailers</item>
+        <item>Old Movies</item>
         <item>More</item>
     </string-array>
 
     <string name="daily_pick_query">playlists/PL20D110E235D198ED</string>
 
-    <string name="admob_id_home">ca-app-pub-3230884902788293/9805097990</string>
-    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/7002101994</string>
-    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/4899145197</string>
+    <string name="admob_id_home">ca-app-pub-3230884902788293/7909562392</string>
+    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/1976473191</string>
+    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/6042644395</string>
 
-    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqABVgQ7gk1lRqKI/BSyvqLuAhLxRQA2m4sd9p6vgM9FVSxdV5+TFctdYWkTGcGq8ele3xPAwoDqdPSLZT16oc8w4DRvxUD3SKdhmOePpYSDxhPRA7xPvdRarWjr4HqEr/AOcL3Oz1V3vs1gQ5rBkak8BsdHa/YIFxpjXQ8WYKJnGxyzz6yR21UltjSnM0AiGKt+AKsxk9KZylrb80PMOqv9K+iNSP4BNQ+iBF7bDWqbDuoROs9cK5P+JlGfBNb6irseEFms4jJzzkZcvf1K2szKyraVu59hihzMO64fSuaeHItMMBTZnoqN3heqxL4086Yp9kOFcDytSCQcPElp+DwIDAQAB</string>
+    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8oC5S0MucP7VA3vIiGiXTdHSdp3teFyKmBj6sZJ254ogTieCFa/yPhqajKgVvQyrN3uSPe1CIWm9UkPedHeLX/jR2EEgSm4/npOkmQoKhp/RJjV8Su7WrGq2TCUJJMHJDdTwv62wmkVdLVWTjp67jpHK6MmQZhTOifVqaOhb5wseeYhP0UWxsWvssTM1RpR2mshtVvmqSdK034LrV3lmRYsORGYbsRPsL/NdwzurE11ZK4Au5YdRMuvLWseqKoLlsbWgUQFQOeSd8E8waKmiVlllKfjO+GZF09qXRWP0OReiuVLbrXtQ1lJEMwlaDHZtihWaLVio1/aqFYYulhA+QIDAQAB</string>
 
     <string name="developer">ModernApps</string>
     <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
