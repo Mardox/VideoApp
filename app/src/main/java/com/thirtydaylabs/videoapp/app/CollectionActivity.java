@@ -73,6 +73,7 @@ import java.util.List;
 
 /**
  * Created by HooMan on 5/12/13.
+ * New Line
  */
 public class CollectionActivity extends FragmentActivity {
 
