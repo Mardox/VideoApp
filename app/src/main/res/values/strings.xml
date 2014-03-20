@@ -12,7 +12,7 @@ search : videos?q=hooman majd
     <string-array name="query_duration">
         <item>long</item> <!-- this is search -->
         <item></item>
-        <item>long</item>
+        <item></item>
         <item>long</item>
         <item>long</item>
     </string-array>
