@@ -71,8 +71,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 /**
  * Created by HooMan on 5/12/13.
+ * Main Activity of the App
  */
 public class CollectionActivity extends FragmentActivity {
 
@@ -91,7 +93,6 @@ public class CollectionActivity extends FragmentActivity {
     ViewPager mViewPager;
     public static final String PREFS_NAME  = "PrefsFile";
     Dialog dialog;
-    Intent intent = getIntent();
     static String query;
     /**
      * Push notification variables
@@ -678,6 +679,7 @@ public class CollectionActivity extends FragmentActivity {
 
                         //Remove the upgrade menu
                         MenuItem item = mMenu.findItem(R.id.action_upgrade);
+                        assert item != null;
                         item.setVisible(false);
 
                         //Remove the ads
@@ -754,20 +756,19 @@ public class CollectionActivity extends FragmentActivity {
             e.printStackTrace();
         }
 
+        assert ownedItems != null;
         int response = ownedItems.getInt("RESPONSE_CODE");
         if (response == 0) {
             ArrayList<String> ownedSkus =
                     ownedItems.getStringArrayList("INAPP_PURCHASE_ITEM_LIST");
             ArrayList<String>  purchaseDataList =
                     ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
-            ArrayList<String>  signatureList =
-                    ownedItems.getStringArrayList("INAPP_DATA_SIGNATURE");
-            String continuationToken =
-                    ownedItems.getString("INAPP_CONTINUATION_TOKEN");
 
+            assert purchaseDataList != null;
             for (int i = 0; i < purchaseDataList.size(); ++i) {
                 String purchaseData = purchaseDataList.get(i);
 //                String signature = signatureList.get(i);
+                assert ownedSkus != null;
                 String sku = ownedSkus.get(i);
                 Log.i(TAG,sku);
                 Log.i(TAG,purchaseData);
@@ -989,7 +990,7 @@ public class CollectionActivity extends FragmentActivity {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                String msg = "";
+                String msg;
                 try {
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(context);
@@ -1030,8 +1031,7 @@ public class CollectionActivity extends FragmentActivity {
      */
     private static int getAppVersion(Context context) {
         try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             // should never happen
