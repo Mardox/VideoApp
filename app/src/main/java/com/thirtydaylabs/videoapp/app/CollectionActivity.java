@@ -366,8 +366,8 @@ public class CollectionActivity extends FragmentActivity {
 
     /**
      * on actionbar item listener
-     * @param item
-     * @return
+     * @param item menuitem
+     * @return boolean
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
