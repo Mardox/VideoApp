@@ -45,7 +45,7 @@
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_favorite"
         />
-    <item android:id="@+id/action_setting"
+    <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_about"

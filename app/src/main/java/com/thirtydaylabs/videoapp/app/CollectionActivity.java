@@ -388,9 +388,9 @@ public class CollectionActivity extends FragmentActivity {
 //            case R.id.action_about:
 //                MenuFunctions.openAbout(context);
 //                return true;
-            //            case R.id.action_about:
-//                MenuFunctions.openAbout(context);
-//                return true;
+            case R.id.action_settings:
+                MenuFunctions.settings(context);
+                return true;
             case R.id.action_mores:
                 MenuFunctions.openMore(context);
                 return true;
