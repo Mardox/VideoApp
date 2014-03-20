@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:orientation="vertical"
+    android:background="@color/background_grey"
+    android:id="@+id/main_list_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+       <!-- Screen Design for Photos -->
+        <GridView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="5dp"
+            android:horizontalSpacing="5dp"
+            android:stretchMode="columnWidth"
+            android:columnWidth="350dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:padding="10dp"
+            android:layout_alignParentTop="true"
+            />
+
+
+        <ProgressBar
+            android:id="@+id/prgLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.ProgressBar.Inverse"
+            android:layout_centerInParent="true"/>
+</RelativeLayout>
+

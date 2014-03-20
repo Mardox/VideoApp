@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thirtydaylabs.pksongs" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.mardox.mathtricks.permission.C2D_MESSAGE" />
+    <permission
+        android:name="com.thirtydaylabs.videoapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.android.vending.BILLING" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name="com.thirtydaylabs.videoapp.app.CollectionActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name=".CollectionActivity"/>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.thirtydaylabs.videoapp.app.PlayerActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:noHistory="true"
+            android:configChanges="orientation|screenSize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CollectionActivity" />
+        </activity>
+
+        <activity android:name="com.thirtydaylabs.videoapp.app.PushActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="true"
+            android:parentActivityName="com.thirtydaylabs.videoapp.app.CollectionActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CollectionActivity" />
+        </activity>
+
+        <activity android:name="com.thirtydaylabs.videoapp.app.AboutActivity"
+            android:configChanges="orientation|screenSize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CollectionActivity" />
+        </activity>
+
+        <activity android:name="com.thirtydaylabs.videoapp.app.WebViewActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CollectionActivity" />
+        </activity>
+
+
+        <receiver
+            android:name="com.thirtydaylabs.videoapp.utilities.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.mardox.mathtricks" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.thirtydaylabs.videoapp.app.DailyVideoService"
+            android:enabled="true"
+            android:process=":remote">
+        </receiver>
+
+
+        <receiver android:name="com.thirtydaylabs.videoapp.utilities.BaseBootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED">
+                </action>
+                <category android:name="android.intent.category.HOME">
+                </category>
+            </intent-filter>
+        </receiver>
+
+
+
+        <service android:name="com.thirtydaylabs.videoapp.utilities.GcmIntentService" />
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+        <!-- Used for Google Play Store Campaign Measurement-->;
+        <service android:name="com.google.analytics.tracking.android.CampaignTrackingService" />
+        <receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+
+    </application>
+
+
+
+
+
+</manifest>

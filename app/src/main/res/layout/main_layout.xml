@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+              android:orientation="vertical"
+              android:background="@color/background_grey"
+              android:id="@+id/main_list_layout"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+      <!-- Screen Design for Photos -->
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                 />
+
+        <ProgressBar
+                android:id="@+id/prgLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Inverse"
+                android:layout_centerInParent="true"/>
+        <com.google.ads.AdView android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adUnitId="@string/admob_id_home"
+            android:layout_alignParentBottom="true"
+            ads:adSize="SMART_BANNER"
+            ads:testDevices="TEST_EMULATOR, 6d37195d-a3c7-466b-ae56-9e6d6d25a5b5"
+            ads:loadAdOnCreate="true"/>
+        <LinearLayout android:id="@+id/banner"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content" >
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
