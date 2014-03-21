@@ -11,6 +11,7 @@ search : videos?q=hooman majd
 
     <string-array name="query_duration">
         <item></item> <!-- this is search -->
+        <item></item>
         <item>long</item>
         <item></item>
         <item>long</item>
@@ -37,7 +38,7 @@ search : videos?q=hooman majd
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL20D110E235D198ED</string>
+    <string name="daily_pick_query">playlists/PLDCC6C421E24AB500</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/6760999190</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/8237732396</string>
