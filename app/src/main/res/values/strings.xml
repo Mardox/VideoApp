@@ -18,7 +18,7 @@ search : videos?q=hooman majd
     </string-array>
 
     <string-array name="queries">
-        <item>nigerian </item> <!-- this is search -->
+        <item></item> <!-- this is search -->
         <item>videos?q=nigerian new movies</item>
         <item>videos?q=nigerian movies trailer</item>
         <item>videos?q=nigerian old movies</item>
