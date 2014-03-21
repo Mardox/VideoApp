@@ -40,8 +40,8 @@ public class AlarmController {
         Calendar nowCalendar = Calendar.getInstance();
 
         alaramCalendar.setTimeInMillis(System.currentTimeMillis());
-        alaramCalendar.set(Calendar.HOUR_OF_DAY, 23);
-        alaramCalendar.set(Calendar.MINUTE, 48);
+        alaramCalendar.set(Calendar.HOUR_OF_DAY, 17);
+        alaramCalendar.set(Calendar.MINUTE, 00);
 
         //Make sure alarm is set for the next day
         if(alaramCalendar.getTimeInMillis() <= nowCalendar.getTimeInMillis())
