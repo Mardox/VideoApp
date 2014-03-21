@@ -48,7 +48,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.thirtydaylabs.pksongs.R;
+import com.thirtydaylabs.myanmarmovies.R;
 import com.thirtydaylabs.videoapp.utilities.AlarmController;
 import com.thirtydaylabs.videoapp.utilities.BaseBootReceiver;
 import com.thirtydaylabs.videoapp.utilities.MenuFunctions;

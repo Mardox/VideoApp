@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.thirtydaylabs.pksongs.R;
+import com.thirtydaylabs.myanmarmovies.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
