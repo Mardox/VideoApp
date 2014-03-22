@@ -7,22 +7,24 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">PK Songs</string>
+    <string name="app_name">Snooker Tips</string>
 
     <string-array name="query_duration">
         <item></item> <!-- this is search -->
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 
     <string-array name="queries">
         <item></item> <!-- this is search -->
-        <item>dailyvideos?q=pk songs</item>
-        <item>videos?q=new pk music</item>
-        <item>videos?q=old pk songs</item>
-        <item>videos?q=pk songs</item>
+        <item>dailyvideos?q=Snooker tips</item>
+        <item>videos?q=Snooker tutorials</item>
+        <item>videos?q=Snooker tips</item>
+        <item>videos?q=Snooker competition</item>
+        <item>videos?q=Snooker tricks</item>
     </string-array>
 
     <string name="genre"></string>
@@ -30,18 +32,19 @@ search : videos?q=hooman majd
     <string-array name="tab_titles">
         <item>Search Results</item>
         <item>Daily Digest</item>
-        <item>New</item>
-        <item>Old</item>
+        <item>Tutorials</item>
+        <item>Tips</item>
+        <item>Competition</item>
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL20D110E235D198ED</string>
+    <string name="daily_pick_query">playlists/PL843C3752A449C15C</string>
 
-    <string name="admob_id_home">ca-app-pub-3230884902788293/9805097990</string>
-    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/7002101994</string>
-    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/4899145197</string>
+    <string name="admob_id_home">ca-app-pub-3230884902788293/9080937599</string>
+    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/1557670790</string>
+    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/6871745993</string>
 
-    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqABVgQ7gk1lRqKI/BSyvqLuAhLxRQA2m4sd9p6vgM9FVSxdV5+TFctdYWkTGcGq8ele3xPAwoDqdPSLZT16oc8w4DRvxUD3SKdhmOePpYSDxhPRA7xPvdRarWjr4HqEr/AOcL3Oz1V3vs1gQ5rBkak8BsdHa/YIFxpjXQ8WYKJnGxyzz6yR21UltjSnM0AiGKt+AKsxk9KZylrb80PMOqv9K+iNSP4BNQ+iBF7bDWqbDuoROs9cK5P+JlGfBNb6irseEFms4jJzzkZcvf1K2szKyraVu59hihzMO64fSuaeHItMMBTZnoqN3heqxL4086Yp9kOFcDytSCQcPElp+DwIDAQAB</string>
+    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlN1ayvvdiD4q/MP2G/h8jyPVE2qsz1CIxhGd/kfdtxDONbeN2KcNSJqnj0weganBhAZLj31y1iICLXH4tTseNhbB4p2XkDaRhsnaz7q9X1UW8mcsMxqQxcYoWT0keoYKpEge604ngsyHdqJ7C0PfuKR/YVfg6PlZKxwoN9vjF07rF/ZM8LcBNUGw89PKvtWQuzQSxNlJbPrwoTCQpWBY1gwJBcHDtk1wd6YF2m6NS4t0nvDkAAUUVUC7jc+ibgUiJBva6BY6Xcmql1wQhl1ZhRTUkIeHe/sJ+XbhHZRwNfrLK+gXsNNhJZbLgAL06vRlHnyZaaQ1b67dauZZpbcYGQIDAQAB</string>
 
     <string name="developer">ModernApps</string>
     <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
