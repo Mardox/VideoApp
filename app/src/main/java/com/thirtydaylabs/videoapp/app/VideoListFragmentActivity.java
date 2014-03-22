@@ -320,8 +320,10 @@ public class VideoListFragmentActivity extends Fragment{
      */
     private void connectionErrorDialog() {
 
+
+        final Context lContext = getActivity();
         //Create the upgrade dialog
-        new AlertDialog.Builder(context)
+        new AlertDialog.Builder(lContext)
                 .setTitle(getString(R.string.connection_error_dialog_title))
                 .setMessage(getString(R.string.connection_error_dialog_text))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
