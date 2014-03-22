@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thirtydaylabs.pksongs" >
+    package="com.thirtydaylabs.karatevideolessons" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="karatevideolessonsandroid.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

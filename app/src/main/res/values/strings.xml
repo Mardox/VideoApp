@@ -7,22 +7,28 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">PK Songs</string>
+    <string name="app_name">Karate Lessons</string>
 
     <string-array name="query_duration">
         <item></item> <!-- this is search -->
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 
     <string-array name="queries">
         <item></item> <!-- this is search -->
-        <item>dailyvideos?q=pk songs</item>
-        <item>videos?q=new pk music</item>
-        <item>videos?q=old pk songs</item>
-        <item>videos?q=pk songs</item>
+        <item>dailyvideos?q=karate lessons</item>
+        <item>videos?q=karate lessons</item>
+        <item>videos?q=Kihon</item>
+        <item>videos?q=Kata</item>
+        <item>videos?q=Kumite</item>
+        <item>videos?q=Karate competitions</item>
+        <item>videos?q=Karate tutorials</item>
     </string-array>
 
     <string name="genre"></string>
@@ -30,18 +36,21 @@ search : videos?q=hooman majd
     <string-array name="tab_titles">
         <item>Search Results</item>
         <item>Daily Digest</item>
-        <item>New</item>
-        <item>Old</item>
+        <item>Lessons</item>
+        <item>Kihon</item>
+        <item>Kata</item>
+        <item>Kumite</item>
+        <item>Competition</item>
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL20D110E235D198ED</string>
+    <string name="daily_pick_query">playlists/PL7E6AE4B1911CF3C0</string>
 
-    <string name="admob_id_home">ca-app-pub-3230884902788293/9805097990</string>
-    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/7002101994</string>
-    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/4899145197</string>
+    <string name="admob_id_home">ca-app-pub-3230884902788293/6721937992</string>
+    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/6781775990</string>
+    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/1141439997</string>
 
-    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqABVgQ7gk1lRqKI/BSyvqLuAhLxRQA2m4sd9p6vgM9FVSxdV5+TFctdYWkTGcGq8ele3xPAwoDqdPSLZT16oc8w4DRvxUD3SKdhmOePpYSDxhPRA7xPvdRarWjr4HqEr/AOcL3Oz1V3vs1gQ5rBkak8BsdHa/YIFxpjXQ8WYKJnGxyzz6yR21UltjSnM0AiGKt+AKsxk9KZylrb80PMOqv9K+iNSP4BNQ+iBF7bDWqbDuoROs9cK5P+JlGfBNb6irseEFms4jJzzkZcvf1K2szKyraVu59hihzMO64fSuaeHItMMBTZnoqN3heqxL4086Yp9kOFcDytSCQcPElp+DwIDAQAB</string>
+    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0rzhjYAE75BWhZJ+bCzuQAxrWslSI1Kf/YH3AAanBxTOIqOlUsWU0XhY7KDAkX6qXxyqwTU0pZznDac0NxLK6WfZGrZR86FQUEskm3OkPfTsRBVjHI612jPsvSvi65/FT9aSRVmWMNPqiDaMiM52QBComjhzeQcSdRhSH6iDLaR+3qAkHgr9PLXRaCREquFOT8hEBo34T/jONdWtltHpQ+C49RUKg1YXKHP/ffnUuuhb9xoHmsXgoTA97Gu1RClsvsDddm3UkZ02ii5ZN6FuUahcB9l9K2VdvIc9w5POUaIvsEdCVdOnydU+aLOv1Iq2FIWafT/ebZRsXe7vYeCKIQIDAQAB</string>
 
     <string name="developer">ModernApps</string>
     <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
