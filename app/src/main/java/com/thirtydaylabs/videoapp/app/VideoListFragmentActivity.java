@@ -61,8 +61,6 @@ public class VideoListFragmentActivity extends Fragment{
     static final String KEY_DURATION = "duration";
 
 
-
-
     GridView videoList;
     ProgressBar prgLoading;
 
