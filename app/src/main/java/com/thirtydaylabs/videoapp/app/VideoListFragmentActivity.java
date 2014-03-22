@@ -1,7 +1,9 @@
 package com.thirtydaylabs.videoapp.app;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -318,18 +320,20 @@ public class VideoListFragmentActivity extends Fragment{
      */
     private void connectionErrorDialog() {
 
+        final Context lContext = getActivity();
         //Create the upgrade dialog
-//        new AlertDialog.Builder(context.getApplicationContext())
-//                .setTitle(getString(R.string.connection_error_dialog_title))
-//                .setMessage(getString(R.string.connection_error_dialog_text))
-//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // reset the request
-//                        searchVideos(0, true);
-//                    }
-//                })
-//                .setIcon(R.drawable.ic_action_dark_error)
-//                .show();
+        new AlertDialog.Builder(lContext)
+                .setTitle(getString(R.string.connection_error_dialog_title))
+                .setMessage(getString(R.string.connection_error_dialog_text))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // reset the request
+                        searchVideos(0, true);
+                    }
+                })
+                .setIcon(R.drawable.ic_action_dark_error)
+                .show();
+
     }
 
 
