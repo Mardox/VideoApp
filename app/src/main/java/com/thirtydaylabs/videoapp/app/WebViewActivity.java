@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.thirtydaylabs.pksongs.R;
+import com.thirtydaylabs.koreandrama.R;
 
 
 /**
