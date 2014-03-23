@@ -7,22 +7,24 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">PK Songs</string>
+    <string name="app_name">Gymnastics Lessons</string>
 
     <string-array name="query_duration">
         <item></item> <!-- this is search -->
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 
     <string-array name="queries">
         <item></item> <!-- this is search -->
-        <item>dailyvideos?q=pk songs</item>
-        <item>videos?q=new pk music</item>
-        <item>videos?q=old pk songs</item>
-        <item>videos?q=pk songs</item>
+        <item>dailyvideos?q=Gymnastics Tips</item>
+        <item>videos?q=Gymnastics Tips</item>
+        <item>videos?q=Gymnastics Lessons</item>
+        <item>videos?q=Gymnastics Floor Routines</item>
+        <item>videos?q=Gymnastics World Championships</item>
     </string-array>
 
     <string name="genre"></string>
@@ -30,18 +32,19 @@ search : videos?q=hooman majd
     <string-array name="tab_titles">
         <item>Search Results</item>
         <item>Daily Digest</item>
-        <item>New</item>
-        <item>Old</item>
-        <item>More</item>
+        <item>Tips</item>
+        <item>Lessons</item>
+        <item>Routines</item>
+        <item>Championships</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL20D110E235D198ED</string>
+    <string name="daily_pick_query">playlists/PLNYqWWimiG-NA_Ex-C02liKSD4a8P4GCj</string>
 
-    <string name="admob_id_home">ca-app-pub-3230884902788293/9805097990</string>
-    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/7002101994</string>
-    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/4899145197</string>
+    <string name="admob_id_home">ca-app-pub-3230884902788293/4826402395</string>
+    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/6509247590</string>
+    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/9506618395</string>
 
-    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqABVgQ7gk1lRqKI/BSyvqLuAhLxRQA2m4sd9p6vgM9FVSxdV5+TFctdYWkTGcGq8ele3xPAwoDqdPSLZT16oc8w4DRvxUD3SKdhmOePpYSDxhPRA7xPvdRarWjr4HqEr/AOcL3Oz1V3vs1gQ5rBkak8BsdHa/YIFxpjXQ8WYKJnGxyzz6yR21UltjSnM0AiGKt+AKsxk9KZylrb80PMOqv9K+iNSP4BNQ+iBF7bDWqbDuoROs9cK5P+JlGfBNb6irseEFms4jJzzkZcvf1K2szKyraVu59hihzMO64fSuaeHItMMBTZnoqN3heqxL4086Yp9kOFcDytSCQcPElp+DwIDAQAB</string>
+    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjZ3wu4R5kjRENy3vXks98hd1QPhCUuHRXQWi0hrSW/eQct4jwKXjqM2bIxXins4SldvPOhigNoRY9iKa7tiEKNA6fwSbTMKNpZbnNGXackwmhh2brGfG96AwZtujzQUWJLYfNk3+CKh8p7sSDqj5o9gQcOlDX8ktyPfRN+Lht38sIwcRaHh1wAtfWummDLC0t3GOfZVHSYhPZw7yoyOad1DXX+grtMWYSeoTDyybHXNgZeNqMyFLk9b/vUSEdU2ujGfL721i0vwlnJVGt5FyyA6KjU7X92Ct88SeFCwlKdFRsOn5vn2uzWhTlU8+ENM6Vo9MeuwN60T6ekudI0N1GwIDAQAB</string>
 
     <string name="developer">ModernApps</string>
     <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
