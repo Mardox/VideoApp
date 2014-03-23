@@ -224,7 +224,6 @@ public class VideoListFragmentActivity extends Fragment{
                 }
                 catch(Exception e){
                     Log.e("myApp", "Whoops - something went wrong with httpObject!");
-                    connectionErrorDialog();
                     // e.printStackTrace();
                 }
             }
@@ -320,9 +319,9 @@ public class VideoListFragmentActivity extends Fragment{
      */
     private void connectionErrorDialog() {
 
-        final Context lContext = getActivity();
+        final Context context = getActivity();
         //Create the upgrade dialog
-        new AlertDialog.Builder(lContext)
+        new AlertDialog.Builder(context)
                 .setTitle(getString(R.string.connection_error_dialog_title))
                 .setMessage(getString(R.string.connection_error_dialog_text))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
