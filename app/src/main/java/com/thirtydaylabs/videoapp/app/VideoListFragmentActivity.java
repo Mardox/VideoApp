@@ -222,7 +222,6 @@ public class VideoListFragmentActivity extends Fragment{
                 }
                 catch(Exception e){
                     Log.e("myApp", "Whoops - something went wrong with httpObject!");
-                    connectionErrorDialog();
                     // e.printStackTrace();
                 }
             }
