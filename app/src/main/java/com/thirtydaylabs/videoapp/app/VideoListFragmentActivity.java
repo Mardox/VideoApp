@@ -77,7 +77,8 @@ public class VideoListFragmentActivity extends Fragment{
 
     int current_page;
     String search_query;
-    String[] api_query;
+    String[] api_queries;
+    String[] api_queries_type;
     String[] query_duration;
 
     @Override
@@ -87,7 +88,8 @@ public class VideoListFragmentActivity extends Fragment{
         Bundle args = getArguments();
         current_page = args.getInt(ARG_OBJECT);
         search_query = args.getString(QUERY_OBJECT);
-        api_query = getResources().getStringArray(R.array.queries);
+        api_queries = getResources().getStringArray(R.array.queries);
+        api_queries_type = getResources().getStringArray(R.array.queries_type);
         query_duration = getResources().getStringArray(R.array.query_duration);
 
         adapter= new listViewAdapter(getActivity(), itemsList, getActivity());
@@ -133,6 +135,7 @@ public class VideoListFragmentActivity extends Fragment{
 
     String query ="";
     String orderby ="";
+    String searchURL="";
 
     public void searchVideos(int page, boolean append){
 
@@ -147,30 +150,42 @@ public class VideoListFragmentActivity extends Fragment{
 
             int offset = page * 50;
             //encode in case user has included symbols such as spaces etc
-            String searchDuration = (query_duration[current_page].length()>0)? "&duration=" + query_duration[current_page] :"";
-            String startIndex = (offset > 0)? "&start-index=" + Integer.toString(offset):"";
-            String genre = (getString(R.string.genre).length()>0)? "&genre=" +getString(R.string.genre) :"";
+            String videoDuration = "";//(query_duration[current_page].length()>0)? "&videoDuration=" + query_duration[current_page] :"";
+            String resultPage =  (page > 0)? "&pageToken=" + Integer.toString(offset):"";
+//            String startIndex = (offset > 0)? "&start-index=" + Integer.toString(offset):"";
+//            String genre = (getString(R.string.genre).length()>0)? "&genre=" +getString(R.string.genre) :"";
 
             if(search_query!=null && current_page == 0){
+
                 //Setup the search parameters
                 postData.start();
-                String compiled_search_query = api_query[current_page]+" "+search_query;
-                query = "videos?q="+compiled_search_query.trim()+"&";
-            }else if(api_query[current_page].substring(0,5).equals("users")){
-                query = api_query[current_page]+"?";
-                orderby = "&orderby=published";
-            }else if(api_query[current_page].substring(0,5).equals("video")){
-                query = api_query[current_page]+"&" ;
-            }else if(api_query[current_page].substring(0,5).equals("playl")){
-                query = api_query[current_page]+"?" ;
-            }else if(api_query[current_page].substring(0,5).equals("daily")){
-                query = api_query[current_page].substring(5)+"&";
-                orderby = "&orderby=viewCount";
-                int randomStartIndex = (int)(Math.random() * (100 + 1));
-                startIndex = "&start-index=" + Integer.toString(offset + randomStartIndex);
-            }
+                String compiled_search_query = api_queries[current_page]+" "+search_query;
+                query = api_queries_type[current_page]+"?q="+compiled_search_query.trim();
 
-            query = query.replace(" ","%20");
+//            }else if(api_queries[current_page].substring(0,5).equals("users")){
+//
+//                query = api_queries[current_page]+"?";
+//                orderby = "&orderby=published";
+
+            }else if(api_queries_type[current_page].equals("search")) {
+
+                query = api_queries_type[current_page] + "?q=" + api_queries[current_page];
+
+
+
+            }else if(api_queries_type[current_page].equals("playlists")) {
+
+                query = api_queries_type[current_page] + "?playlistId=" + api_queries[current_page];
+
+            }
+//
+//            }else if(api_queries[current_page].substring(0,5).equals("daily")){
+//
+//                query = api_queries[current_page].substring(5)+"&";
+//
+//            }
+
+            query = query.replace(" ","+");
 
             if(!append){
                 itemsList.clear();
@@ -183,9 +198,10 @@ public class VideoListFragmentActivity extends Fragment{
             }
 
             //append encoded user search term to search URL
-//            https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=hooman&key={YOUR_API_KEY}
-            String searchURL = "https://gdata.youtube.com/feeds/api/"+query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"+startIndex+searchDuration+orderby+genre;
-//            String searchURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q="+query;
+//            String searchURL = "https://gdata.youtube.com/feeds/api/"+query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"+startIndex+videoDuration+orderby+genre;
+//            String searchURL = "https://www.googleapis.com/youtube/v3/"+query+"maxResults=50&key="+getString(R.string.youtube_apikey);
+            searchURL = "https://www.googleapis.com/youtube/v3/"+query+"&part=snippet&maxResults=50&type=video"+videoDuration+"&key="+getString(R.string.youtube_apikey);
+//            Log.e(CollectionActivity.TAG,searchURL);
             //instantiate and execute AsyncTask
             if(!prgLoading.isShown()){
                 prgLoading.setVisibility(View.VISIBLE);
@@ -200,6 +216,8 @@ public class VideoListFragmentActivity extends Fragment{
             e.printStackTrace();
         }
     }
+
+
 
     private class GetVideos extends AsyncTask<String, Void, String> {
 
@@ -231,11 +249,11 @@ public class VideoListFragmentActivity extends Fragment{
                         }
                     }
                     else{
-                        Log.e("myApp","Whoops - something went wrong with status code!" + searchStatus.getStatusCode());
+                        Log.e(CollectionActivity.TAG,"Whoops - something went wrong with status code!" + searchStatus.getStatusCode());
                     }
                 }
                 catch(Exception e){
-                    Log.e("myApp", "Whoops - something went wrong with httpObject!");
+                    Log.e(CollectionActivity.TAG, "Whoops - something went wrong with httpObject!");
                 }
             }
 
@@ -251,8 +269,8 @@ public class VideoListFragmentActivity extends Fragment{
                 //get JSONObject from result
                 JSONObject resultObject = new JSONObject(result);
                 //get JSONArray contained within the JSONObject retrieved - "results"
-                JSONObject data = resultObject.getJSONObject("data");
-                JSONArray items = data.getJSONArray("items");;
+//                JSONObject data = resultObject.getJSONObject("data");
+                JSONArray items = resultObject.getJSONArray("items");;
 
                 //loop through each item in the tweet array
 
@@ -262,18 +280,13 @@ public class VideoListFragmentActivity extends Fragment{
                     //each item is a JSONObject
                     JSONObject item;
 
-                    if(query.substring(0,5).equals("playl")){
-                        JSONObject tempitem =items.getJSONObject(t);
-                        item = tempitem.getJSONObject("video");
-                    }else{
-                        item = items.getJSONObject(t);
-                    }
+                    item = items.getJSONObject(t);
 
                     //get the username and text content for each tweet
-                    String id = item.getString("id");
-                    String title = item.getString("title");
-                    String thumbnail = item.getJSONObject("thumbnail").getString("hqDefault");
-                    String duration = item.getString("duration");
+                    String id = item.getJSONObject("id").getString("videoId");
+                    String title = item.getJSONObject("snippet").getString("title");
+                    String thumbnail = item.getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
+                    String duration = "";//item.getString("duration");
 
                     // adding each child node to HashMap key =&gt; value
                     map.put(ITEM_TYPE, "video");
@@ -287,7 +300,7 @@ public class VideoListFragmentActivity extends Fragment{
                 }
             }
             catch (Exception e) {
-                Log.e("myApp", "Whoops - something went wrong!");
+                Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
                 noResultErrorDialog();
                 e.printStackTrace();
             }
@@ -314,7 +327,6 @@ public class VideoListFragmentActivity extends Fragment{
                             startActivity(youtubeActivity);
                         }
                     }
-
 
                 });
 

@@ -46,27 +46,27 @@ public class listViewAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-            View vi = inflater.inflate(R.layout.video_card_row, null);
-            assert vi != null;
-            TextView title = (TextView)vi.findViewById(R.id.title); // title
-            TextView sponsored = (TextView)vi.findViewById(R.id.sponsored); // title
-            ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
-            TextView duration = (TextView)vi.findViewById(R.id.duration); // title
+        View vi = inflater.inflate(R.layout.video_card_row, null);
+        assert vi != null;
+        TextView title = (TextView)vi.findViewById(R.id.title); // title
+        ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
+        TextView sponsored = (TextView)vi.findViewById(R.id.sponsored); // title
+        TextView duration = (TextView)vi.findViewById(R.id.duration); // title
 
-            HashMap<String, String> video;
-            video = data.get(position);
+        HashMap<String, String> video;
+        video = data.get(position);
 
-            // Setting all values in listview
-//            sponsored.setVisibility(sponsored.GONE);
-//            if(video.get(VideoListFragmentActivity.ITEM_TYPE)=="ad"){
-//                sponsored.setVisibility(sponsored.VISIBLE);
-//            }
-            title.setText(video.get(VideoListFragmentActivity.KEY_TITLE));
+        // Setting all values in listview
+        //  sponsored.setVisibility(sponsored.GONE);
+        //  if(video.get(VideoListFragmentActivity.ITEM_TYPE)=="ad"){
+        //          sponsored.setVisibility(sponsored.VISIBLE);
+        //  }
+        title.setText(video.get(VideoListFragmentActivity.KEY_TITLE));
 
-            duration.setText(timeConvertor(video.get(VideoListFragmentActivity.KEY_DURATION)));
+//            duration.setText(timeConvertor(video.get(VideoListFragmentActivity.KEY_DURATION)));
 
-            Picasso.with(activity.getApplicationContext()).load(video.get(VideoListFragmentActivity.KEY_THUMB)).into(thumb_image);
-            return vi;
+        Picasso.with(activity.getApplicationContext()).load(video.get(VideoListFragmentActivity.KEY_THUMB)).into(thumb_image);
+        return vi;
     }
 
 
