@@ -41,7 +41,7 @@
     <string name="upgrade_offer_title">Upgrade The App Now</string>
     <string name="upgrade_offer_text">Remove the Ads and unlock premium search by upgrading!</string>
     <string name="rate_offer_title">Please Rate Our App! :-)</string>
-    <string name="connection_error_dialog_title">Error</string>
+    <string name="error_dialog_title">Error</string>
     <!--<string name="connection_error_dialog_text">Internet is not available to load the videos, please check the connection.</string>-->
     <string name="upgrade_error_dialog_title">Something Went Wrong</string>
     <string name="upgrade_error_dialog_body_text">Something went wrong with your purchase, please try again or contact support@30daylabs.com.</string>

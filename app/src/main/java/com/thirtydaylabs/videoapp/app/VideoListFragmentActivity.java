@@ -72,7 +72,6 @@ public class VideoListFragmentActivity extends Fragment{
 
     ListAdapter adapter;
 
-    final Context context = getActivity();
     View rootView;
 
     int current_page;
@@ -80,16 +79,22 @@ public class VideoListFragmentActivity extends Fragment{
     String[] api_queries;
     String[] api_queries_type;
     String[] query_duration;
+    String nextPageToken;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         rootView = inflater.inflate(R.layout.fragment_collection_object, container, false);
+
         Bundle args = getArguments();
+
         current_page = args.getInt(ARG_OBJECT);
         search_query = args.getString(QUERY_OBJECT);
+
         api_queries = getResources().getStringArray(R.array.queries);
         api_queries_type = getResources().getStringArray(R.array.queries_type);
+
         query_duration = getResources().getStringArray(R.array.query_duration);
 
         adapter= new listViewAdapter(getActivity(), itemsList, getActivity());
@@ -110,22 +115,24 @@ public class VideoListFragmentActivity extends Fragment{
                 View v = videoList.getChildAt(0);
                 int top = (v == null) ? 0 : v.getTop();
                 //Call to append new data to the list
-                searchVideos(page, true);
+                if(!nextPageToken.equals(""))
+                    searchVideos(nextPageToken, true);
                 //scroll back to the listvie's location
                 videoList.setVerticalScrollbarPosition(index);// setSelectionFromTop(index, top);
             }
         });
 
-        searchVideos(0, true);
+        searchVideos("", true);
 
         return rootView;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                searchVideos(0, false);
+                searchVideos("", false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -137,53 +144,45 @@ public class VideoListFragmentActivity extends Fragment{
     String orderby ="";
     String searchURL="";
 
-    public void searchVideos(int page, boolean append){
+    public void searchVideos(String pageToken, boolean append){
 
 
         //Check if the internet connection is available
         if(!isOnline()){
-            errorDialog();
+            networkErrorDialog();
             return;
         }
 
         try{
 
-            int offset = page * 50;
             //encode in case user has included symbols such as spaces etc
-            String videoDuration = "";//(query_duration[current_page].length()>0)? "&videoDuration=" + query_duration[current_page] :"";
-            String resultPage =  (page > 0)? "&pageToken=" + Integer.toString(offset):"";
-//            String startIndex = (offset > 0)? "&start-index=" + Integer.toString(offset):"";
-//            String genre = (getString(R.string.genre).length()>0)? "&genre=" +getString(R.string.genre) :"";
+            String videoDuration = (query_duration[current_page].length()>0)? "&videoDuration=" + query_duration[current_page] :"";
+            String resultPage =  (!pageToken.equals(""))? "&pageToken=" + pageToken:"";
+            //String genre = (getString(R.string.genre).length()>0)? "&genre=" +getString(R.string.genre) :"";
 
             if(search_query!=null && current_page == 0){
 
-                //Setup the search parameters
-                postData.start();
+                postData.start(); //send the search to APPNET servers
                 String compiled_search_query = api_queries[current_page]+" "+search_query;
                 query = api_queries_type[current_page]+"?q="+compiled_search_query.trim();
-
-//            }else if(api_queries[current_page].substring(0,5).equals("users")){
-//
-//                query = api_queries[current_page]+"?";
-//                orderby = "&orderby=published";
 
             }else if(api_queries_type[current_page].equals("search")) {
 
                 query = api_queries_type[current_page] + "?q=" + api_queries[current_page];
 
-
-
-            }else if(api_queries_type[current_page].equals("playlists")) {
+            }else if(api_queries_type[current_page].equals("playlistItems")) {
 
                 query = api_queries_type[current_page] + "?playlistId=" + api_queries[current_page];
 
             }
-//
+
+
 //            }else if(api_queries[current_page].substring(0,5).equals("daily")){
 //
 //                query = api_queries[current_page].substring(5)+"&";
 //
 //            }
+
 
             query = query.replace(" ","+");
 
@@ -191,28 +190,29 @@ public class VideoListFragmentActivity extends Fragment{
                 itemsList.clear();
                 ArrayList<String> orderbyArray = new ArrayList<String>();
                 orderbyArray.add("relevance");
-                orderbyArray.add("published");
+                orderbyArray.add("date");
                 orderbyArray.add("viewCount");
                 int random = (int)(Math.random() * (2 + 1));
-                orderby = "&orderby=" + orderbyArray.get(random);
+                orderby = "&order=" + orderbyArray.get(random);
             }
 
             //append encoded user search term to search URL
-//            String searchURL = "https://gdata.youtube.com/feeds/api/"+query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"+startIndex+videoDuration+orderby+genre;
-//            String searchURL = "https://www.googleapis.com/youtube/v3/"+query+"maxResults=50&key="+getString(R.string.youtube_apikey);
-            searchURL = "https://www.googleapis.com/youtube/v3/"+query+"&part=snippet&maxResults=50&type=video"+videoDuration+"&key="+getString(R.string.youtube_apikey);
-//            Log.e(CollectionActivity.TAG,searchURL);
+            searchURL = "https://www.googleapis.com/youtube/v3/"+query+"&part=snippet&maxResults=50&type=video"
+                    +videoDuration+resultPage+"&key="+getString(R.string.youtube_apikey);
+
+            Log.e(CollectionActivity.TAG,searchURL);
+
+
             //instantiate and execute AsyncTask
             if(!prgLoading.isShown()){
                 prgLoading.setVisibility(View.VISIBLE);
             }
 
-
             new GetVideos().execute(searchURL);
 
         }
         catch(Exception e){
-            Log.e("myApp", "Whoops - something went wrong getting the videos!");
+            Log.e("myApp", "Whoops - something went wrong getting the videos!" + e.toString());
             e.printStackTrace();
         }
     }
@@ -266,27 +266,44 @@ public class VideoListFragmentActivity extends Fragment{
             //start preparing result string for display
 
             try {
+
                 //get JSONObject from result
                 JSONObject resultObject = new JSONObject(result);
-                //get JSONArray contained within the JSONObject retrieved - "results"
-//                JSONObject data = resultObject.getJSONObject("data");
-                JSONArray items = resultObject.getJSONArray("items");;
+
+                if(resultObject.has("nextPageToken"))
+                    nextPageToken = resultObject.getString("nextPageToken");
+                else
+                    nextPageToken = "";
+
+                JSONArray items = resultObject.getJSONArray("items");
 
                 //loop through each item in the tweet array
 
                 for (int t=0; t<items.length(); t++) {
 
                     HashMap<String, String> map = new HashMap<String, String>();
-                    //each item is a JSONObject
+
                     JSONObject item;
 
                     item = items.getJSONObject(t);
 
-                    //get the username and text content for each tweet
-                    String id = item.getJSONObject("id").getString("videoId");
-                    String title = item.getJSONObject("snippet").getString("title");
-                    String thumbnail = item.getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
-                    String duration = "";//item.getString("duration");
+                    String id;
+                    String title;
+                    String thumbnail;
+                    String duration;
+
+                    if(api_queries_type[current_page].equals("playlistItems")) {
+                        id = item.getJSONObject("snippet").getJSONObject("resourceId").getString("videoId");
+                    }else{
+                        id = item.getJSONObject("id").getString("videoId");
+                    }
+
+                    title = item.getJSONObject("snippet").getString("title");
+                    thumbnail = item.getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("high").getString("url");
+
+                    //Log.e(CollectionActivity.TAG,item.toString());
+
+                    duration = "";//item.getString("duration");
 
                     // adding each child node to HashMap key =&gt; value
                     map.put(ITEM_TYPE, "video");
@@ -357,17 +374,17 @@ public class VideoListFragmentActivity extends Fragment{
     /**
      * Network connection error dialog
      */
-    private void errorDialog() {
+    private void networkErrorDialog() {
 
         final Context context = getActivity();
         //Create the upgrade dialog
         new AlertDialog.Builder(context)
-                .setTitle(getString(R.string.connection_error_dialog_title))
+                .setTitle(getString(R.string.error_dialog_title))
                 .setMessage(R.string.no_internet_message)
                 .setPositiveButton(R.string.retry_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // reset the request
-                        searchVideos(0, true);
+                        searchVideos("", true);
                     }
                 })
                 .setIcon(R.drawable.ic_action_dark_error)
@@ -384,7 +401,7 @@ public class VideoListFragmentActivity extends Fragment{
         final Context context = getActivity();
         //Create the upgrade dialog
         new AlertDialog.Builder(context)
-                .setTitle(getString(R.string.connection_error_dialog_title))
+                .setTitle(getString(R.string.error_dialog_title))
                 .setMessage(R.string.no_search_results)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
