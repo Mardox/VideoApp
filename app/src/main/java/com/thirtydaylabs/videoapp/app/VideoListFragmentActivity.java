@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -133,6 +135,13 @@ public class VideoListFragmentActivity extends Fragment{
     String orderby ="";
 
     public void searchVideos(int page, boolean append){
+
+        //Check if the internet connection is available
+        if(!isOnline()){
+            networkErrorDialog();
+            return;
+        }
+
 
         try{
 
@@ -274,7 +283,8 @@ public class VideoListFragmentActivity extends Fragment{
                 }
             }
             catch (Exception e) {
-                Log.e("myApp", "Whoops - something went wrong!");
+                Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
+                noResultErrorDialog();
                 e.printStackTrace();
             }
 
@@ -301,12 +311,10 @@ public class VideoListFragmentActivity extends Fragment{
                         }
                     }
 
-
                 });
 
             }else{
                 prgLoading.setVisibility(View.GONE);
-                connectionErrorDialog();
             }
 
         }
@@ -315,16 +323,31 @@ public class VideoListFragmentActivity extends Fragment{
 
 
     /**
+     * Check if Internet connectuion is available
+     */
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /**
      * Network connection error dialog
      */
-    private void connectionErrorDialog() {
+    private void networkErrorDialog() {
 
-        final Context lContext = getActivity();
+        final Context context = getActivity();
         //Create the upgrade dialog
-        new AlertDialog.Builder(lContext)
-                .setTitle(getString(R.string.connection_error_dialog_title))
-                .setMessage(getString(R.string.connection_error_dialog_text))
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.error_dialog_title))
+                .setMessage(R.string.no_internet_message)
+                .setPositiveButton(R.string.retry_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // reset the request
                         searchVideos(0, true);
@@ -333,6 +356,30 @@ public class VideoListFragmentActivity extends Fragment{
                 .setIcon(R.drawable.ic_action_dark_error)
                 .show();
     }
+
+
+
+    /**
+     * Network connection error dialog
+     */
+    private void noResultErrorDialog() {
+
+        final Context context = getActivity();
+        //Create the upgrade dialog
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.error_dialog_title))
+                .setMessage(R.string.no_search_results)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // reset the request
+
+                    }
+                })
+                .setIcon(R.drawable.ic_action_dark_error)
+                .show();
+    }
+
+
 
 
 
