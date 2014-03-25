@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thirtydaylabs.pksongs" >
+    package="com.thirtydaylabs.hindimovies" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-    <uses-permission android:name="com.mardox.mathtricks.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.thirtydaylabs.hindimovies.permission.C2D_MESSAGE" />
     <permission
         android:name="com.thirtydaylabs.videoapp.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />

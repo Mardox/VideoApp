@@ -28,7 +28,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.thirtydaylabs.pksongs.R;
+import com.thirtydaylabs.hindimovies.R;
 import com.thirtydaylabs.videoapp.utilities.MenuFunctions;
 
 
