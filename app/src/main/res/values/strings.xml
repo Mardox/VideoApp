@@ -14,7 +14,8 @@ search : videos?q=hooman majd
         <item>long</item>
         <item>long</item>
         <item>long</item>
-        <item>long</item>
+        <item></item>
+        <item></item>
     </string-array>
 
     <string-array name="queries">
@@ -22,6 +23,7 @@ search : videos?q=hooman majd
         <item>dailyvideos?q=Hindi Movies</item>
         <item>videos?q=new Hindi Movies</item>
         <item>videos?q=old Hindi Movies</item>
+        <item>videos?q=Hindi Movies Trailers</item>
         <item>videos?q=Hindi Movies</item>
     </string-array>
 
@@ -32,6 +34,7 @@ search : videos?q=hooman majd
         <item>Daily Digest</item>
         <item>New</item>
         <item>Old</item>
+        <item>Trailers</item>
         <item>More</item>
     </string-array>
 
