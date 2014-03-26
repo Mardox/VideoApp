@@ -20,7 +20,7 @@ search : videos?q=hooman majd
     <string-array name="queries">
         <item></item> <!-- this is search -->
         <item>dailyvideos?q=pk songs</item>
-        <item>videos?q=new pk music</item>
+        <item>videos?q=new pk songs</item>
         <item>videos?q=old pk songs</item>
         <item>videos?q=pk songs</item>
     </string-array>
