@@ -164,7 +164,8 @@ public class CollectionActivity extends FragmentActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
         boolean overlay_shown = settings.getBoolean("helpOverlay", false);
         if(!overlay_shown){
-            //Call the set overlay, you can put the logic of checking if overlay is already called with a simple sharedpreference
+            //Call the set overlay, you can put the logic of checking if overlay is already called
+            // with a simple sharedpreference
             showOverLay();
         }
 
@@ -206,8 +207,6 @@ public class CollectionActivity extends FragmentActivity {
 
     }
 
-
-
     /**
      * In-App purchase service
      */
@@ -240,8 +239,6 @@ public class CollectionActivity extends FragmentActivity {
         }
     };
 
-
-
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -249,8 +246,6 @@ public class CollectionActivity extends FragmentActivity {
 
         handleIntent(intent);
     }
-
-
 
     //handle search intent
     private void handleIntent(Intent intent) {
@@ -261,7 +256,6 @@ public class CollectionActivity extends FragmentActivity {
 
         }
     }
-
 
     //Activity life cycles
     @Override
@@ -312,6 +306,8 @@ public class CollectionActivity extends FragmentActivity {
     public MenuItem getSearchMenuItem() {
         return searchMenuItem;
     }
+
+
 
     /**
      * Create the actionbar menu
@@ -367,8 +363,8 @@ public class CollectionActivity extends FragmentActivity {
 
     /**
      * on actionbar item listener
-     * @param item
-     * @return
+     * @param item menuitem
+     * @return boolean
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -519,6 +515,7 @@ public class CollectionActivity extends FragmentActivity {
             // Start loading the ad in the background.
             adView.loadAd(adRequest);
         }
+
     }
 
 
@@ -623,9 +620,9 @@ public class CollectionActivity extends FragmentActivity {
                     Bundle buyIntentBundle = mService.getBuyIntent(3, context.getPackageName(),
                             SKU, "inapp", null);
                     PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
+                    assert pendingIntent != null;
                     startIntentSenderForResult(pendingIntent.getIntentSender(),
-                            1001, new Intent(), Integer.valueOf(0), Integer.valueOf(0),
-                            Integer.valueOf(0));
+                            1001, new Intent(), 0, 0, 0);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (IntentSender.SendIntentException e) {
@@ -636,6 +633,7 @@ public class CollectionActivity extends FragmentActivity {
             }else{
                 // no billing V3
                 MenuItem item = mMenu.findItem(R.id.action_upgrade);
+                assert item != null;
                 item.setVisible(false);
             }
         } catch (RemoteException e) {
@@ -658,8 +656,8 @@ public class CollectionActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1001) {
-            int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
             String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");
+            int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
             String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
 
             if (resultCode == RESULT_OK) {
@@ -743,7 +741,6 @@ public class CollectionActivity extends FragmentActivity {
 
 
 
-
     /**
      * check purchased items
      */
@@ -765,36 +762,59 @@ public class CollectionActivity extends FragmentActivity {
                     ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
 
             assert purchaseDataList != null;
+
+            SharedPreferences settings =
+                    getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
+
             for (int i = 0; i < purchaseDataList.size(); ++i) {
-                String purchaseData = purchaseDataList.get(i);
-//                String signature = signatureList.get(i);
-                assert ownedSkus != null;
+
                 String sku = ownedSkus.get(i);
                 Log.i(TAG,sku);
-                Log.i(TAG,purchaseData);
-                if(sku.equals("android.test.purchased")){
-                    try {
 
-                        //Consume the order
-                        int cResponse = mService.consumePurchase(3, getPackageName(), "inapp:com.mardox.mathtricks:android.test.purchased");
-                        Log.i(TAG,"consume response: "+cResponse);
+                // String purchaseData = purchaseDataList.get(i);
+                // Log.i(TAG,purchaseData);
 
-                        if(cResponse==0) {
-                            //reset the sharedprefrences
-                            SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putBoolean("premiumStatus", false);
-                            editor.commit();
+                //check and apply the premium purchase
+                if(sku.equals(getString(R.string.premium_product_id))) {
 
-                            //Enable the ads
-                            adMobBannerInitiate();
-                            adMobInterstitialInitiate();
-                        }
+                    //Check if the flag is not set, if true set the flag and reinit AdMob
+                    if(!settings.getBoolean("premiumStatus", false)) {
+                        //Set the premium flag
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putBoolean("premiumStatus", true);
+                        editor.commit();
 
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
+                        //Remove the ads
+                        adMobBannerInitiate();
                     }
+
                 }
+
+                //Check and remove the test package
+//                if(sku.equals("android.test.purchased")){
+//                    try {
+//
+//                        //Consume the order
+//                        int cResponse = mService.consumePurchase(3, getPackageName(), "inapp:com.mardox.mathtricks:android.test.purchased");
+//                        Log.i(TAG,"consume response: "+cResponse);
+//
+//                        if(cResponse==0) {
+//                            //reset the sharedprefrences
+//                            SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
+//                            SharedPreferences.Editor editor = settings.edit();
+//                            editor.putBoolean("premiumStatus", false);
+//                            editor.commit();
+//
+//                            //Enable the ads
+//                            adMobBannerInitiate();
+//                            adMobInterstitialInitiate();
+//                        }
+//
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+
                 // do something with this purchase information
                 // e.g. display the updated list of products owned by user
             }
@@ -990,7 +1010,7 @@ public class CollectionActivity extends FragmentActivity {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                String msg;
+                String msg = "";
                 try {
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(context);
@@ -1031,7 +1051,8 @@ public class CollectionActivity extends FragmentActivity {
      */
     private static int getAppVersion(Context context) {
         try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             // should never happen
