@@ -11,16 +11,16 @@ search : videos?q=hooman majd
 
     <string-array name="query_duration">
         <item></item> <!-- this is search -->
-        <item></item>
+        <item>long</item>
         <item>long</item>
         <item></item>
         <item>long</item>
-        <item></item>
+        <item>long</item>
     </string-array>
 
     <string-array name="queries">
         <item></item> <!-- this is search -->
-        <item>videos?q=Myanmar Movies</item>
+        <item>dailyvideos?q=Myanmar Movies</item>
         <item>videos?q=New Myanmar Movies</item>
         <item>videos?q=Myanmar Movies trailer</item>
         <item>videos?q=Myanmar Movies movies</item>
