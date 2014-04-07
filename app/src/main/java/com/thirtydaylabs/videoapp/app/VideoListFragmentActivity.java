@@ -293,7 +293,7 @@ public class VideoListFragmentActivity extends Fragment{
             if(!itemsList.isEmpty()){
 
                 prgLoading.setVisibility(View.GONE);
-//                adapter.notifyDataSetChanged();
+                videoList.invalidateViews();
                 videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     HashMap<String, String> item;
 
