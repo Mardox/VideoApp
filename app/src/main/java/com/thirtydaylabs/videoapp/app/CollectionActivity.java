@@ -160,6 +160,9 @@ public class CollectionActivity extends FragmentActivity {
         });
 
 
+        Log.i(CollectionActivity.TAG,"App is running");
+
+
         // Restore preferences
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_MULTI_PROCESS);
         boolean overlay_shown = settings.getBoolean("helpOverlay", false);

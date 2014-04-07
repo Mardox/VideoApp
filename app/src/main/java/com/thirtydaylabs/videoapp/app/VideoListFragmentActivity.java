@@ -243,78 +243,80 @@ public class VideoListFragmentActivity extends Fragment{
 
         protected void onPostExecute(String result) {
             //start preparing result string for display
+            if (isAdded()) {
 
-            try {
-                //get JSONObject from result
-                JSONObject resultObject = new JSONObject(result);
-                //get JSONArray contained within the JSONObject retrieved - "results"
-                JSONObject data = resultObject.getJSONObject("data");
-                JSONArray items = data.getJSONArray("items");;
+                try {
+                    //get JSONObject from result
+                    JSONObject resultObject = new JSONObject(result);
+                    //get JSONArray contained within the JSONObject retrieved - "results"
+                    JSONObject data = resultObject.getJSONObject("data");
+                    JSONArray items = data.getJSONArray("items");;
 
-                //loop through each item in the tweet array
-                for (int t=0; t<items.length(); t++) {
+                    //loop through each item in the tweet array
+                    for (int t=0; t<items.length(); t++) {
 
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    //each item is a JSONObject
-                    JSONObject item;
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        //each item is a JSONObject
+                        JSONObject item;
 
-                    if(query.substring(0,5).equals("playl")){
-                        JSONObject tempitem =items.getJSONObject(t);
-                        item = tempitem.getJSONObject("video");
-                    }else{
-                        item = items.getJSONObject(t);
-                    }
-
-                    //get the username and text content for each tweet
-                    String id = item.getString("id");
-                    String title = item.getString("title");
-                    String thumbnail = item.getJSONObject("thumbnail").getString("hqDefault");
-                    String duration = item.getString("duration");
-
-                    // adding each child node to HashMap key =&gt; value
-                    map.put(ITEM_TYPE, "video");
-                    map.put(KEY_ID, id);
-                    map.put(KEY_TITLE, title);
-                    map.put(KEY_THUMB, thumbnail);
-                    map.put(KEY_DURATION, duration);
-
-                    itemsList.add(map);
-
-                }
-            }
-            catch (Exception e) {
-                Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
-                noResultErrorDialog();
-                e.printStackTrace();
-            }
-
-            //inflating the list view
-            //check result exists
-            if(!itemsList.isEmpty()){
-
-                prgLoading.setVisibility(View.GONE);
-//                adapter.notifyDataSetChanged();
-                videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    HashMap<String, String> item;
-
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        item = itemsList.get(position);
-                        String item_type = item.get("type");
-                        if (item_type.equals("video")) {
-                            String video_id = item.get("id");
-                            String video_title = item.get("title");
-                            Intent youtubeActivity = new Intent(getActivity(), PlayerActivity.class);
-                            youtubeActivity.putExtra("id", video_id);
-                            youtubeActivity.putExtra("title", video_title);
-                            startActivity(youtubeActivity);
+                        if(query.substring(0,5).equals("playl")){
+                            JSONObject tempitem =items.getJSONObject(t);
+                            item = tempitem.getJSONObject("video");
+                        }else{
+                            item = items.getJSONObject(t);
                         }
+
+                        //get the username and text content for each tweet
+                        String id = item.getString("id");
+                        String title = item.getString("title");
+                        String thumbnail = item.getJSONObject("thumbnail").getString("hqDefault");
+                        String duration = item.getString("duration");
+
+                        // adding each child node to HashMap key =&gt; value
+                        map.put(ITEM_TYPE, "video");
+                        map.put(KEY_ID, id);
+                        map.put(KEY_TITLE, title);
+                        map.put(KEY_THUMB, thumbnail);
+                        map.put(KEY_DURATION, duration);
+
+                        itemsList.add(map);
+
                     }
+                }
+                catch (Exception e) {
+                    Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
+                    noResultErrorDialog();
+                    e.printStackTrace();
+                }
 
-                });
+                //inflating the list view
+                //check result exists
+                if(!itemsList.isEmpty()){
 
-            }else{
-                prgLoading.setVisibility(View.GONE);
+                    prgLoading.setVisibility(View.GONE);
+                    videoList.invalidateViews();
+                    videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        HashMap<String, String> item;
+
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                            item = itemsList.get(position);
+                            String item_type = item.get("type");
+                            if (item_type.equals("video")) {
+                                String video_id = item.get("id");
+                                String video_title = item.get("title");
+                                Intent youtubeActivity = new Intent(getActivity(), PlayerActivity.class);
+                                youtubeActivity.putExtra("id", video_id);
+                                youtubeActivity.putExtra("title", video_title);
+                                startActivity(youtubeActivity);
+                            }
+                        }
+
+                    });
+
+                }else{
+                    prgLoading.setVisibility(View.GONE);
+                }
             }
 
         }

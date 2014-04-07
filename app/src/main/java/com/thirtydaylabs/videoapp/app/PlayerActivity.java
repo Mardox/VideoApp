@@ -145,6 +145,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
                 return true;
             case R.id.action_mores:
                 MenuFunctions.openMore(context);
+                return true;
             case android.R.id.home:
                 // This is called when the Home (Up) button is pressed in the action bar.
                 // Create a simple intent that starts the hierarchical parent activity and
