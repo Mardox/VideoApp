@@ -84,7 +84,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.mardox.mathtricks" />
+                <category android:name="com.thirtydaylabs.electronicstutorials" />
             </intent-filter>
         </receiver>
 
