@@ -243,13 +243,13 @@ public class VideoListFragmentActivity extends Fragment{
 
         protected void onPostExecute(String result) {
             //start preparing result string for display
-
+            if(isAdded()) {
             try {
                 //get JSONObject from result
                 JSONObject resultObject = new JSONObject(result);
                 //get JSONArray contained within the JSONObject retrieved - "results"
                 JSONObject data = resultObject.getJSONObject("data");
-                JSONArray items = data.getJSONArray("items");;
+                JSONArray items = data.getJSONArray("items");
 
                 //loop through each item in the tweet array
                 for (int t=0; t<items.length(); t++) {
@@ -293,7 +293,7 @@ public class VideoListFragmentActivity extends Fragment{
             if(!itemsList.isEmpty()){
 
                 prgLoading.setVisibility(View.GONE);
-//                adapter.notifyDataSetChanged();
+                    videoList.invalidateViews();
                 videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     HashMap<String, String> item;
 
@@ -315,6 +315,7 @@ public class VideoListFragmentActivity extends Fragment{
 
             }else{
                 prgLoading.setVisibility(View.GONE);
+                }
             }
 
         }
