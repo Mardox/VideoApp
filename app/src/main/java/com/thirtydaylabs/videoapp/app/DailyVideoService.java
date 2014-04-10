@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
-import com.thirtydaylabs.hindiserial.R;
+import com.thirtydaylabs.malaymovies.R;
 import com.thirtydaylabs.videoapp.utilities.Notification;
 
 import org.apache.http.HttpEntity;
