@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.thirtydaylabs.nigerianmovies.R;
+import com.thirtydaylabs.hindiserial.R;
 
 
 /**

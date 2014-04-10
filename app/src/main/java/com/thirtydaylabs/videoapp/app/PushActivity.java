@@ -28,7 +28,7 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.thirtydaylabs.nigerianmovies.R;
+import com.thirtydaylabs.hindiserial.R;
 import com.thirtydaylabs.videoapp.utilities.MenuFunctions;
 
 /**

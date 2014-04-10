@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.thirtydaylabs.nigerianmovies.R;
+import com.thirtydaylabs.hindiserial.R;
 import com.thirtydaylabs.videoapp.utilities.MenuFunctions;
 
 

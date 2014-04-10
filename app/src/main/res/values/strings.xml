@@ -7,7 +7,7 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">Nigerian Movies</string>
+    <string name="app_name">Tagalog Movies</string>
 
     <string-array name="query_duration">
         <item>long</item> <!-- this is search -->
@@ -19,10 +19,10 @@ search : videos?q=hooman majd
 
     <string-array name="queries">
         <item></item> <!-- this is search -->
-        <item>videos?q=nigerian new movies</item>
-        <item>videos?q=nigerian movies trailer</item>
-        <item>videos?q=nigerian old movies</item>
-        <item>videos?q=nigerian movies</item>
+        <item>videos?q=Tagalog new movies</item>
+        <item>videos?q=Tagalog movies trailer</item>
+        <item>videos?q=Tagalog old movies</item>
+        <item>videos?q=Tagalog movies</item>
     </string-array>
 
     <string name="genre"></string>
@@ -35,13 +35,13 @@ search : videos?q=hooman majd
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL7F3FD721021AD036</string>
+    <string name="daily_pick_query">playlists/PL1C29C9503FE56CE7</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/7909562392</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/1976473191</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/6042644395</string>
 
-    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8oC5S0MucP7VA3vIiGiXTdHSdp3teFyKmBj6sZJ254ogTieCFa/yPhqajKgVvQyrN3uSPe1CIWm9UkPedHeLX/jR2EEgSm4/npOkmQoKhp/RJjV8Su7WrGq2TCUJJMHJDdTwv62wmkVdLVWTjp67jpHK6MmQZhTOifVqaOhb5wseeYhP0UWxsWvssTM1RpR2mshtVvmqSdK034LrV3lmRYsORGYbsRPsL/NdwzurE11ZK4Au5YdRMuvLWseqKoLlsbWgUQFQOeSd8E8waKmiVlllKfjO+GZF09qXRWP0OReiuVLbrXtQ1lJEMwlaDHZtihWaLVio1/aqFYYulhA+QIDAQAB</string>
+    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhZiGrKZC5hQM1b5ILvBvU0pdZFzO5n6f+EvRnMeRjRh1nbfJ7E3aseZtbQGV44UIaTRjbINri50va9xIqUTtLsAfklcsL99ivYnBe0Aio4URgP3LSFa0OTm4rhT6+n58h39tF/uK36B+9Tq0BqX9CAQEGdzKN25QwqlkuZTgTSUDUn4qxjlimKXUOwZK2SGWTWQIGDjpC0hBk7o4ppIdfLkabWo01JRatX9U1bgcOc+T/cbY6lPP6ckYhALRs/U1egFumlj6Orhd13Mfv6TrPTIiQ+4d+yqrqdQyehdioW954/ksD6MmlYpc1+cxH2Hf80i4ysOtETgqwgGBqTv33wIDAQAB</string>
 
     <string name="developer">ModernApps</string>
     <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>

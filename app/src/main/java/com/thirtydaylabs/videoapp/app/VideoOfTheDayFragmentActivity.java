@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.thirtydaylabs.nigerianmovies.R;
+import com.thirtydaylabs.hindiserial.R;
 
 
 /**
