@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -134,6 +136,13 @@ public class VideoListFragmentActivity extends Fragment{
 
     public void searchVideos(int page, boolean append){
 
+        //Check if the internet connection is available
+        if(!isOnline()){
+            networkErrorDialog();
+            return;
+        }
+
+
         try{
 
             int offset = page * 50;
@@ -234,79 +243,79 @@ public class VideoListFragmentActivity extends Fragment{
 
         protected void onPostExecute(String result) {
             //start preparing result string for display
+            if(isAdded()) {
+                try {
+                    //get JSONObject from result
+                    JSONObject resultObject = new JSONObject(result);
+                    //get JSONArray contained within the JSONObject retrieved - "results"
+                    JSONObject data = resultObject.getJSONObject("data");
+                    JSONArray items = data.getJSONArray("items");
+                    ;
 
-            try {
-                //get JSONObject from result
-                JSONObject resultObject = new JSONObject(result);
-                //get JSONArray contained within the JSONObject retrieved - "results"
-                JSONObject data = resultObject.getJSONObject("data");
-                JSONArray items = data.getJSONArray("items");;
+                    //loop through each item in the tweet array
+                    for (int t = 0; t < items.length(); t++) {
 
-                //loop through each item in the tweet array
-                for (int t=0; t<items.length(); t++) {
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        //each item is a JSONObject
+                        JSONObject item;
 
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    //each item is a JSONObject
-                    JSONObject item;
-
-                    if(query.substring(0,5).equals("playl")){
-                        JSONObject tempitem =items.getJSONObject(t);
-                        item = tempitem.getJSONObject("video");
-                    }else{
-                        item = items.getJSONObject(t);
-                    }
-
-                    //get the username and text content for each tweet
-                    String id = item.getString("id");
-                    String title = item.getString("title");
-                    String thumbnail = item.getJSONObject("thumbnail").getString("hqDefault");
-                    String duration = item.getString("duration");
-
-                    // adding each child node to HashMap key =&gt; value
-                    map.put(ITEM_TYPE, "video");
-                    map.put(KEY_ID, id);
-                    map.put(KEY_TITLE, title);
-                    map.put(KEY_THUMB, thumbnail);
-                    map.put(KEY_DURATION, duration);
-
-                    itemsList.add(map);
-
-                }
-            }
-            catch (Exception e) {
-                Log.e("myApp", "Whoops - something went wrong!");
-                e.printStackTrace();
-            }
-
-            //inflating the list view
-            //check result exists
-            if(!itemsList.isEmpty()){
-
-                prgLoading.setVisibility(View.GONE);
-//                adapter.notifyDataSetChanged();
-                videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    HashMap<String, String> item;
-
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        item = itemsList.get(position);
-                        String item_type = item.get("type");
-                        if (item_type.equals("video")) {
-                            String video_id = item.get("id");
-                            String video_title = item.get("title");
-                            Intent youtubeActivity = new Intent(getActivity(), PlayerActivity.class);
-                            youtubeActivity.putExtra("id", video_id);
-                            youtubeActivity.putExtra("title", video_title);
-                            startActivity(youtubeActivity);
+                        if (query.substring(0, 5).equals("playl")) {
+                            JSONObject tempitem = items.getJSONObject(t);
+                            item = tempitem.getJSONObject("video");
+                        } else {
+                            item = items.getJSONObject(t);
                         }
+
+                        //get the username and text content for each tweet
+                        String id = item.getString("id");
+                        String title = item.getString("title");
+                        String thumbnail = item.getJSONObject("thumbnail").getString("hqDefault");
+                        String duration = item.getString("duration");
+
+                        // adding each child node to HashMap key =&gt; value
+                        map.put(ITEM_TYPE, "video");
+                        map.put(KEY_ID, id);
+                        map.put(KEY_TITLE, title);
+                        map.put(KEY_THUMB, thumbnail);
+                        map.put(KEY_DURATION, duration);
+
+                        itemsList.add(map);
+
                     }
+                } catch (Exception e) {
+                    Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
+                    noResultErrorDialog();
+                    e.printStackTrace();
+                }
 
+                //inflating the list view
+                //check result exists
+                if (!itemsList.isEmpty()) {
 
-                });
+                    prgLoading.setVisibility(View.GONE);
+                    videoList.invalidateViews();
+                    videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        HashMap<String, String> item;
 
-            }else{
-                prgLoading.setVisibility(View.GONE);
-                connectionErrorDialog();
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                            item = itemsList.get(position);
+                            String item_type = item.get("type");
+                            if (item_type.equals("video")) {
+                                String video_id = item.get("id");
+                                String video_title = item.get("title");
+                                Intent youtubeActivity = new Intent(getActivity(), PlayerActivity.class);
+                                youtubeActivity.putExtra("id", video_id);
+                                youtubeActivity.putExtra("title", video_title);
+                                startActivity(youtubeActivity);
+                            }
+                        }
+
+                    });
+
+                } else {
+                    prgLoading.setVisibility(View.GONE);
+                }
             }
 
         }
@@ -315,16 +324,31 @@ public class VideoListFragmentActivity extends Fragment{
 
 
     /**
+     * Check if Internet connectuion is available
+     */
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /**
      * Network connection error dialog
      */
-    private void connectionErrorDialog() {
+    private void networkErrorDialog() {
 
-        final Context lContext = getActivity();
+        final Context context = getActivity();
         //Create the upgrade dialog
-        new AlertDialog.Builder(lContext)
-                .setTitle(getString(R.string.connection_error_dialog_title))
-                .setMessage(getString(R.string.connection_error_dialog_text))
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.error_dialog_title))
+                .setMessage(R.string.no_internet_message)
+                .setPositiveButton(R.string.retry_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // reset the request
                         searchVideos(0, true);
@@ -332,8 +356,31 @@ public class VideoListFragmentActivity extends Fragment{
                 })
                 .setIcon(R.drawable.ic_action_dark_error)
                 .show();
-
     }
+
+
+
+    /**
+     * Network connection error dialog
+     */
+    private void noResultErrorDialog() {
+
+        final Context context = getActivity();
+        //Create the upgrade dialog
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.error_dialog_title))
+                .setMessage(R.string.no_search_results)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // reset the request
+
+                    }
+                })
+                .setIcon(R.drawable.ic_action_dark_error)
+                .show();
+    }
+
+
 
 
 

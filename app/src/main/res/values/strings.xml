@@ -44,7 +44,7 @@ search : videos?q=hooman majd
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL7E6AE4B1911CF3C0</string>
+    <string name="daily_pick_query">playlists/PL6D380199A4FF3A4A</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/6721937992</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/6781775990</string>
