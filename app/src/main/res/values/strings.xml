@@ -37,9 +37,9 @@ search : videos?q=hooman majd
 
     <string name="daily_pick_query">playlists/PL1C29C9503FE56CE7</string>
 
-    <string name="admob_id_home">ca-app-pub-3230884902788293/7909562392</string>
-    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/1976473191</string>
-    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/6042644395</string>
+    <string name="admob_id_home">ca-app-pub-3230884902788293/1468442393</string>
+    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/2945175597</string>
+    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/9479168395</string>
 
     <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhZiGrKZC5hQM1b5ILvBvU0pdZFzO5n6f+EvRnMeRjRh1nbfJ7E3aseZtbQGV44UIaTRjbINri50va9xIqUTtLsAfklcsL99ivYnBe0Aio4URgP3LSFa0OTm4rhT6+n58h39tF/uK36B+9Tq0BqX9CAQEGdzKN25QwqlkuZTgTSUDUn4qxjlimKXUOwZK2SGWTWQIGDjpC0hBk7o4ppIdfLkabWo01JRatX9U1bgcOc+T/cbY6lPP6ckYhALRs/U1egFumlj6Orhd13Mfv6TrPTIiQ+4d+yqrqdQyehdioW954/ksD6MmlYpc1+cxH2Hf80i4ysOtETgqwgGBqTv33wIDAQAB</string>
 
