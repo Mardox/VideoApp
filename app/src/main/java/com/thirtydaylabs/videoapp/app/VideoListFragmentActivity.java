@@ -21,7 +21,7 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 
-import com.thirtydaylabs.hindiserial.R;
+import com.thirtydaylabs.telugumovies.R;
 import com.thirtydaylabs.videoapp.utilities.EndlessScrollListener;
 
 import org.apache.http.HttpEntity;

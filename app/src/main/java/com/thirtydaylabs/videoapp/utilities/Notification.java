@@ -14,7 +14,7 @@ import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.thirtydaylabs.hindiserial.R;
+import com.thirtydaylabs.telugumovies.R;
 import com.thirtydaylabs.videoapp.app.PushActivity;
 
 import java.io.IOException;
