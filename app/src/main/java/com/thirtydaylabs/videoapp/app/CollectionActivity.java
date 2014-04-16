@@ -184,7 +184,9 @@ public class CollectionActivity extends FragmentActivity {
                 }else{
                     // no billing V3
                     MenuItem item = mMenu.findItem(R.id.action_upgrade);
-                    item.setVisible(false);
+                    if (item != null) {
+                        item.setVisible(false);
+                    }
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
