@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -300,6 +301,40 @@ public class SearchActivity extends FragmentActivity {
 
             // Start loading the ad in the background.
             adView.loadAd(adRequest);
+            final EasyTracker easyTracker = EasyTracker.getInstance(context);
+            adView.setAdListener(new AdListener() {
+                @Override
+                public void onAdOpened() {
+                    // Save app state before going to the ad overlay.
+
+                    //Send the ad open event to google analytics
+                    easyTracker.send(MapBuilder
+                                    .createEvent("ui_event",     // Event category (required)
+                                            "button_press",  // Event action (required)
+                                            "banner_ad",   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    super.onAdFailedToLoad(errorCode);
+
+                    //Send the on ad fail to load event to google analytics
+                    easyTracker.send(MapBuilder
+                                    .createEvent("ui_event",     // Event category (required)
+                                            "ui_load_fail",  // Event action (required)
+                                            "banner_ad",   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+
+                }
+            });
+
+
         }
 
     }

@@ -38,6 +38,7 @@ import android.widget.SearchView;
 
 import com.android.vending.billing.IInAppBillingService;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -101,6 +102,7 @@ public class CollectionActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
+
         actionBar = getActionBar();
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
@@ -110,7 +112,6 @@ public class CollectionActivity extends FragmentActivity {
 
         // Specify that tabs should be displayed in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
 
 
         //setting the adapter and the list view arraylist
@@ -511,6 +512,35 @@ public class CollectionActivity extends FragmentActivity {
 
             // Start loading the ad in the background.
             adView.loadAd(adRequest);
+            final EasyTracker easyTracker = EasyTracker.getInstance(context);
+            adView.setAdListener(new AdListener() {
+
+                @Override
+                public void onAdOpened() {
+                    //Send the ad open event to google analytics
+                    easyTracker.send(MapBuilder
+                                    .createEvent("ui_event",     // Event category (required)
+                                            "button_press",  // Event action (required)
+                                            "banner_ad",   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    super.onAdFailedToLoad(errorCode);
+                    //Send the on ad fail to load event to google analytics
+                    easyTracker.send(MapBuilder
+                                    .createEvent("ui_event",     // Event category (required)
+                                            "ui_load_fail",  // Event action (required)
+                                            "banner_ad",   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+                }
+
+            });
         }
 
     }
@@ -657,6 +687,32 @@ public class CollectionActivity extends FragmentActivity {
 
                     //Upgrade the app if the sku matched the upgrade package
                     if(sku.equals(getString(R.string.premium_product_id))) {
+
+                        // May return null if EasyTracker has not yet been initialized with a
+                        // property ID.
+                        EasyTracker easyTracker = EasyTracker.getInstance(this);
+
+                        easyTracker.send(MapBuilder
+                                        .createTransaction(jo.getString("orderId"), // (String) Transaction ID
+                                                "In-app Store",   // (String) Affiliation
+                                                0.99d,            // (Double) Order revenue
+                                                0.0d,            // (Double) Tax
+                                                0.0d,             // (Double) Shipping
+                                                "USD")            // (String) Currency code
+                                        .build()
+                        );
+
+                        easyTracker.send(MapBuilder
+                                        .createItem(jo.getString("orderId"),               // (String) Transaction ID
+                                                "Premium Upgrade",      // (String) Product name
+                                                "premium",                  // (String) Product SKU
+                                                "Paid Upgrade",        // (String) Product category
+                                                0.99d,                    // (Double) Product price
+                                                1L,                       // (Long) Product quantity
+                                                "USD")                    // (String) Currency code
+                                        .build()
+                        );
+
                         //Set the premium flag
                         SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
                         SharedPreferences.Editor editor = settings.edit();
@@ -687,6 +743,9 @@ public class CollectionActivity extends FragmentActivity {
             }
         }
     }
+
+
+
 
 
 
