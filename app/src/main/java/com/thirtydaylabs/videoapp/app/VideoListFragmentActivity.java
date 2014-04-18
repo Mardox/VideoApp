@@ -53,9 +53,6 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class VideoListFragmentActivity extends Fragment{
 
-    public static final String ARG_OBJECT = "object";
-    public static final String QUERY_OBJECT = "query";
-
     static final String ITEM_TYPE = "type";
     static final String KEY_ID = "id";
     static final String KEY_TITLE = "title";
@@ -85,8 +82,10 @@ public class VideoListFragmentActivity extends Fragment{
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_collection_object, container, false);
         Bundle args = getArguments();
-        current_page = args.getInt(ARG_OBJECT);
-        search_query = args.getString(QUERY_OBJECT);
+
+        current_page = args.getInt(CollectionActivity.ARG_OBJECT);
+
+        search_query = args.getString(CollectionActivity.QUERY_OBJECT);
         api_query = getResources().getStringArray(R.array.queries);
         query_duration = getResources().getStringArray(R.array.query_duration);
 
@@ -108,6 +107,7 @@ public class VideoListFragmentActivity extends Fragment{
                 View v = videoList.getChildAt(0);
                 int top = (v == null) ? 0 : v.getTop();
                 //Call to append new data to the list
+                Log.i(CollectionActivity.TAG,"Scroll been triggered");
                 searchVideos(page, true);
                 //scroll back to the listvie's location
                 videoList.setVerticalScrollbarPosition(index);// setSelectionFromTop(index, top);
@@ -131,6 +131,11 @@ public class VideoListFragmentActivity extends Fragment{
     }
 
 
+    public void refresh(){
+        searchVideos(0, true);
+    }
+
+
     String query ="";
     String orderby ="";
 
@@ -151,10 +156,10 @@ public class VideoListFragmentActivity extends Fragment{
             String startIndex = (offset > 0)? "&start-index=" + Integer.toString(offset):"";
             String genre = (getString(R.string.genre).length()>0)? "&genre=" +getString(R.string.genre) :"";
 
-            if(search_query!=null && current_page == 0){
+            if(search_query!=null && (current_page == query_duration.length-1)){
                 //Setup the search parameters
-                postData.start();
-                String compiled_search_query = api_query[current_page]+" "+search_query;
+                if(offset == 0){ postData.start();}
+                String compiled_search_query = search_query;
                 query = "videos?q="+compiled_search_query.trim()+"&";
             }else if(api_query[current_page].substring(0,5).equals("users")){
                 query = api_query[current_page]+"?";
@@ -185,6 +190,7 @@ public class VideoListFragmentActivity extends Fragment{
             //append encoded user search term to search URL
             String searchURL = "https://gdata.youtube.com/feeds/api/"+query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"+startIndex+searchDuration+orderby+genre;
             //instantiate and execute AsyncTask
+            Log.i(CollectionActivity.TAG,searchURL);
             if(!prgLoading.isShown()){
                 prgLoading.setVisibility(View.VISIBLE);
             }
@@ -194,7 +200,7 @@ public class VideoListFragmentActivity extends Fragment{
 
         }
         catch(Exception e){
-            Log.e("myApp", "Whoops - something went wrong getting the videos!");
+            Log.e("myApp", "Whoops - something went wrong getting the videos!"+ e.toString());
             e.printStackTrace();
         }
     }
@@ -243,33 +249,33 @@ public class VideoListFragmentActivity extends Fragment{
 
         protected void onPostExecute(String result) {
             //start preparing result string for display
-            if (isAdded()) {
-
+            if(isAdded()) {
                 try {
                     //get JSONObject from result
                     JSONObject resultObject = new JSONObject(result);
                     //get JSONArray contained within the JSONObject retrieved - "results"
                     JSONObject data = resultObject.getJSONObject("data");
-                    JSONArray items = data.getJSONArray("items");;
+                    JSONArray items = data.getJSONArray("items");
+                    ;
 
                     //loop through each item in the tweet array
-                    for (int t=0; t<items.length(); t++) {
+                    for (int t = 0; t < items.length(); t++) {
 
                         HashMap<String, String> map = new HashMap<String, String>();
                         //each item is a JSONObject
                         JSONObject item;
 
-                        if(query.substring(0,5).equals("playl")){
-                            JSONObject tempitem =items.getJSONObject(t);
+                        if (query.substring(0, 5).equals("playl")) {
+                            JSONObject tempitem = items.getJSONObject(t);
                             item = tempitem.getJSONObject("video");
-                        }else{
+                        } else {
                             item = items.getJSONObject(t);
                         }
 
                         //get the username and text content for each tweet
                         String id = item.getString("id");
                         String title = item.getString("title");
-                        String thumbnail = item.getJSONObject("thumbnail").getString("hqDefault");
+                        String thumbnail = "http://img.youtube.com/vi/"+id+"/mqdefault.jpg";
                         String duration = item.getString("duration");
 
                         // adding each child node to HashMap key =&gt; value
@@ -282,8 +288,7 @@ public class VideoListFragmentActivity extends Fragment{
                         itemsList.add(map);
 
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
                     noResultErrorDialog();
                     e.printStackTrace();
@@ -291,7 +296,7 @@ public class VideoListFragmentActivity extends Fragment{
 
                 //inflating the list view
                 //check result exists
-                if(!itemsList.isEmpty()){
+                if (!itemsList.isEmpty()) {
 
                     prgLoading.setVisibility(View.GONE);
                     videoList.invalidateViews();
@@ -314,7 +319,7 @@ public class VideoListFragmentActivity extends Fragment{
 
                     });
 
-                }else{
+                } else {
                     prgLoading.setVisibility(View.GONE);
                 }
             }
