@@ -21,6 +21,8 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.thirtydaylabs.pksongs.R;
 import com.thirtydaylabs.videoapp.utilities.EndlessScrollListener;
 
@@ -58,6 +60,7 @@ public class VideoListFragmentActivity extends Fragment{
     static final String KEY_TITLE = "title";
     static final String KEY_THUMB = "thumbnail";
     static final String KEY_DURATION = "duration";
+    static final String KEY_VIEW_COUNT = "viewCount";
 
 
 
@@ -152,13 +155,30 @@ public class VideoListFragmentActivity extends Fragment{
 
             int offset = page * 50;
             //encode in case user has included symbols such as spaces etc
-            String searchDuration = (query_duration[current_page].length()>0)? "&duration=" + query_duration[current_page] :"";
+            String searchDuration = (query_duration[current_page].length()>0)? "&duration="
+                    + query_duration[current_page] :"";
             String startIndex = (offset > 0)? "&start-index=" + Integer.toString(offset):"";
             String genre = (getString(R.string.genre).length()>0)? "&genre=" +getString(R.string.genre) :"";
 
             if(search_query!=null && (current_page == query_duration.length-1)){
                 //Setup the search parameters
-                if(offset == 0){ postData.start();}
+                if(offset == 0){
+
+                    // Send data to Analytics
+                    EasyTracker easyTracker = EasyTracker.getInstance(context);
+
+                    easyTracker.send(MapBuilder
+                                    .createEvent("user_action",     // Event category (required)
+                                            "video_search",  // Event action (required)
+                                            search_query,   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+
+                    //Send the search to the backend
+                    postData.start();
+
+                }
                 String compiled_search_query = search_query;
                 query = "videos?q="+compiled_search_query.trim()+"&";
             }else if(api_query[current_page].substring(0,5).equals("users")){
@@ -188,7 +208,9 @@ public class VideoListFragmentActivity extends Fragment{
             }
 
             //append encoded user search term to search URL
-            String searchURL = "https://gdata.youtube.com/feeds/api/"+query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"+startIndex+searchDuration+orderby+genre;
+            String searchURL = "https://gdata.youtube.com/feeds/api/"
+                    +query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"
+                    +startIndex+searchDuration+orderby+genre;
             //instantiate and execute AsyncTask
             Log.i(CollectionActivity.TAG,searchURL);
             if(!prgLoading.isShown()){
@@ -235,7 +257,8 @@ public class VideoListFragmentActivity extends Fragment{
                         }
                     }
                     else
-                        Log.e("myApp","Whoops - something went wrong with status code!" + searchStatus.getStatusCode());
+                        Log.e("myApp","Whoops - something went wrong with status code!"
+                                + searchStatus.getStatusCode());
                 }
                 catch(Exception e){
                     Log.e("myApp", "Whoops - something went wrong with httpObject!");
@@ -277,6 +300,7 @@ public class VideoListFragmentActivity extends Fragment{
                         String title = item.getString("title");
                         String thumbnail = "http://img.youtube.com/vi/"+id+"/mqdefault.jpg";
                         String duration = item.getString("duration");
+                        String views = item.getString("viewCount");
 
                         // adding each child node to HashMap key =&gt; value
                         map.put(ITEM_TYPE, "video");
@@ -284,6 +308,7 @@ public class VideoListFragmentActivity extends Fragment{
                         map.put(KEY_TITLE, title);
                         map.put(KEY_THUMB, thumbnail);
                         map.put(KEY_DURATION, duration);
+                        map.put(KEY_VIEW_COUNT, views);
 
                         itemsList.add(map);
 
