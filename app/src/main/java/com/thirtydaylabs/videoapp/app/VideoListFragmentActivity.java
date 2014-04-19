@@ -212,7 +212,7 @@ public class VideoListFragmentActivity extends Fragment{
                     +query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"
                     +startIndex+searchDuration+orderby+genre;
             //instantiate and execute AsyncTask
-            Log.i(CollectionActivity.TAG,searchURL);
+            // Log.i(CollectionActivity.TAG,searchURL);
             if(!prgLoading.isShown()){
                 prgLoading.setVisibility(View.VISIBLE);
             }
