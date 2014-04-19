@@ -10,27 +10,26 @@ search : videos?q=hooman majd
     <string name="app_name">Korean Drama</string>
 
     <string-array name="query_duration">
-        <item></item> <!-- this is search -->
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>long</item>
         <item>long</item>
         <item></item>
+        <item>long</item>
+        <item>long</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>dailyvideos?q=korean drama</item>
         <item>videos?q=new korean drama</item>
         <item>videos?q=korean drama Trailers</item>
         <item>videos?q=korean drama Movies</item>
         <item>videos?q=korean drama</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>New</item>
         <item>Trailers</item>
@@ -38,9 +37,10 @@ search : videos?q=hooman majd
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PLF6DF69413D434465</string>
+    <string name="daily_pick_query">playlists/PLF35ABF9B64F63C08</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/9585418791</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/9585418791</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/4805515195</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/9605533197</string>
 
