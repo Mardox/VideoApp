@@ -10,27 +10,26 @@ search : videos?q=hooman majd
     <string name="app_name">Myanmar Movies</string>
 
     <string-array name="query_duration">
-        <item></item> <!-- this is search -->
         <item>long</item>
         <item>long</item>
         <item></item>
         <item>long</item>
         <item>long</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>dailyvideos?q=Myanmar Movies</item>
         <item>videos?q=New Myanmar Movies</item>
         <item>videos?q=Myanmar Movies trailer</item>
         <item>videos?q=Myanmar Movies movies</item>
         <item>videos?q=Myanmar Movies</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>New</item>
         <item>Trailers</item>
@@ -41,6 +40,7 @@ search : videos?q=hooman majd
     <string name="daily_pick_query">playlists/PLDCC6C421E24AB500</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/6760999190</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/3832600796</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/8237732396</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/1693169990</string>
 
