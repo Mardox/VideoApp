@@ -10,29 +10,28 @@ search : videos?q=hooman majd
     <string name="app_name">Mechanical Engineering</string>
 
     <string-array name="query_duration">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
         <item></item> <!-- this is search -->
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>dailyvideos?q=Mechanical Engineering</item>
         <item>videos?q=Mechanical Engineering Lectures</item>
         <item>videos?q=Mechanical Engineering tips</item>
         <item>videos?q=Mechanical Engineering tutorials</item>
         <item>videos?q=Mechanical Engineering jobs</item>
         <item>videos?q=Mechanical Engineering</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>Lectures</item>
         <item>Tips</item>
@@ -44,6 +43,7 @@ search : videos?q=hooman majd
     <string name="daily_pick_query">playlists/PLT8RCCgU0GtkJnFRpDe0j_pFr5cQXC19M</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/2423908797</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/8562021599</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/3496905590</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/1104413995</string>
 
