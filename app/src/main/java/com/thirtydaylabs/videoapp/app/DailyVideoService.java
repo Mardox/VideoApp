@@ -94,13 +94,22 @@ public class DailyVideoService extends BroadcastReceiver{
                 JSONObject data = responseJSON.getJSONObject("data");
                 JSONArray items = data.getJSONArray("items");
 
-                //random number
-                random = (int)(Math.random() * (items.length()));
-//                Log.i("Daily random",Integer.toString(random));
-//                Log.i("Daily array length",Integer.toString(items.length()));
+
                 //each item is a JSONObject
-                JSONObject tempitem =items.getJSONObject(random);
-                JSONObject item = tempitem.getJSONObject("video");
+                JSONObject tempitem;
+                JSONObject item;
+                int counter = 0;
+
+                //Filter the deleted and suspended videos
+                do {
+
+                    random = (int)(Math.random() * (items.length()));
+                    tempitem =items.getJSONObject(random);
+                    item = tempitem.getJSONObject("video");
+                    //Log.i(CollectionActivity.TAG,"While loop");
+                    counter++;
+
+                }while(item.has("status") && counter < items.length());
 
 
                 //item = items.getJSONObject(random);
@@ -113,7 +122,7 @@ public class DailyVideoService extends BroadcastReceiver{
 
                 String vidID = item.getString("id");
                 String subtitle = item.getString("title");
-                String externalIcon = item.getJSONObject("thumbnail").getString("hqDefault");
+                String externalIcon = "http://img.youtube.com/vi/"+vidID+"/mqdefault.jpg";
 
                 // Adding some values to the HashMap
                 push.put("title", title);
@@ -121,13 +130,15 @@ public class DailyVideoService extends BroadcastReceiver{
                 push.put("externalIcon", externalIcon);
 
 
+                //Log.i(CollectionActivity.TAG,vidID);
+
                 SharedPreferences settings = contextVariable.getSharedPreferences(CollectionActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString("votd", vidID);
                 editor.commit();
 
-//                Log.i("Daily - new ID", vidID);
                 if(!settings.getBoolean("noDailyAlert",false)) {
+                    //Log.i(CollectionActivity.TAG, "Notification");
                     Notification.sendNotification(contextVariable, push);
                 }
 

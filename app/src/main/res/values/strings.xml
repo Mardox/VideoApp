@@ -10,37 +10,40 @@ search : videos?q=hooman majd
     <string name="app_name">Electronics Tutorials</string>
 
     <string-array name="query_duration">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
         <item></item> <!-- this is search -->
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
-        <item>dailyvideos?q=arduino projects</item>
+        <item>dailyvideos?q=electronics projects</item>
         <item>videos?q=Electronics Bsics</item>
         <item>videos?q=Electronics Tutorials</item>
         <item>videos?q=Electronics Lectures</item>
+        <item>videos?q=Arduino cool projects</item>
         <item>videos?q=Electronics cool projects</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>Basics</item>
         <item>Tutorials</item>
         <item>Lectures</item>
+        <item>Arduino</item>
         <item>More</item>
     </string-array>
 
     <string name="daily_pick_query">playlists/PLD03E7254C567C1B7</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/9447647992</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/5748155992</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/9181351198</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/3240295199</string>
 
