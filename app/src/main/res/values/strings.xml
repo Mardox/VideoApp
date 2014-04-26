@@ -10,27 +10,26 @@ search : videos?q=hooman majd
     <string name="app_name">Ghana Movies</string>
 
     <string-array name="query_duration">
-        <item></item> <!-- this is search -->
         <item>long</item>
         <item>long</item>
         <item></item>
         <item>long</item>
         <item>long</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>dailyvideos?q=Ghana Movies</item>
         <item>videos?q=new Ghana Movies</item>
         <item>videos?q=Ghana Movie Trailers</item>
         <item>videos?q=old Ghana Movies</item>
         <item>videos?q=Ghana Movies</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>New</item>
         <item>Trailers</item>
@@ -41,6 +40,7 @@ search : videos?q=hooman majd
     <string name="daily_pick_query">playlists/PL76E46D080F0E25AD</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/5517607192</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/5408248797</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/6994340396</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/8471073599</string>
 
