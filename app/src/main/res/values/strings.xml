@@ -10,27 +10,26 @@ search : videos?q=hooman majd
     <string name="app_name">Gymnastics Lessons</string>
 
     <string-array name="query_duration">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
         <item></item> <!-- this is search -->
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>dailyvideos?q=Gymnastics Tips</item>
         <item>videos?q=Gymnastics Tips</item>
         <item>videos?q=Gymnastics Lessons</item>
         <item>videos?q=Gymnastics Floor Routines</item>
         <item>videos?q=Gymnastics World Championships</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>Tips</item>
         <item>Lessons</item>
@@ -41,6 +40,7 @@ search : videos?q=hooman majd
     <string name="daily_pick_query">playlists/PLNYqWWimiG-NA_Ex-C02liKSD4a8P4GCj</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/4826402395</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/8684615991</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/6509247590</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/9506618395</string>
 

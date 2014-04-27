@@ -20,8 +20,8 @@
     <string name="today_pick_not_available">Today\'s pick is not out yet!</string>
     <string-array name="notification_titles" >
         <item>Check this out!</item>
-        <item>Today\'s Pick is Ready</item>
-        <item>This is Pretty Cool!</item>
+        <item>Watch Today\'s Pick</item>
+        <item>This is Pretty Nice!</item>
         <item>Pretty Cool Video!</item>
     </string-array>
     <string-array name="rating_response">
