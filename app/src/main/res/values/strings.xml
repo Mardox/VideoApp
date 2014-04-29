@@ -10,34 +10,34 @@ search : videos?q=hooman majd
     <string name="app_name">Hausa Movies</string>
 
     <string-array name="query_duration">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
         <item></item> <!-- this is search -->
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>dailyvideos?q=Hausa Movies</item>
         <item>videos?q=new Hausa Movies</item>
         <item>videos?q=old Hausa Movies</item>
         <item>videos?q=Hausa Movies</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>Daily Digest</item>
         <item>New</item>
         <item>Old</item>
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PLD87BB4C605BF0793</string>
+    <string name="daily_pick_query">playlists/PLKeS2104tMrNY4JS9c_Vh-Ru91ywqYYqD</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/6696633592</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/2055999591</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/9650099992</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/7284521995</string>
 

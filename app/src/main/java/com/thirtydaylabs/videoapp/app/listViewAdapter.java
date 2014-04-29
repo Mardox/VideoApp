@@ -13,8 +13,10 @@ import com.squareup.picasso.Picasso;
 import com.thirtydaylabs.hausamovies.R;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by HooMan on 12/08/13.
@@ -52,6 +54,7 @@ public class listViewAdapter extends BaseAdapter{
             TextView sponsored = (TextView)vi.findViewById(R.id.sponsored); // title
             ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
             TextView duration = (TextView)vi.findViewById(R.id.duration); // title
+            TextView view_count = (TextView)vi.findViewById(R.id.views); // title
 
             HashMap<String, String> video;
             video = data.get(position);
@@ -62,6 +65,11 @@ public class listViewAdapter extends BaseAdapter{
 //                sponsored.setVisibility(sponsored.VISIBLE);
 //            }
             title.setText(video.get(VideoListFragmentActivity.KEY_TITLE));
+            //Setting the text for view count, adding the thousand separators and view string
+            String commaSeparatedViewCount = NumberFormat.getNumberInstance(Locale.US).format(
+                    Integer.parseInt(video.get(VideoListFragmentActivity.KEY_VIEW_COUNT)));
+
+            view_count.setText( commaSeparatedViewCount + " Views");
 
             duration.setText(timeConvertor(video.get(VideoListFragmentActivity.KEY_DURATION)));
 
