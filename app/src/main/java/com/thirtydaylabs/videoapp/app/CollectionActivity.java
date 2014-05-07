@@ -2,6 +2,7 @@ package com.thirtydaylabs.videoapp.app;
 
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,6 +38,7 @@ import android.widget.SearchView;
 
 import com.android.vending.billing.IInAppBillingService;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -54,10 +56,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-
 /**
  * Created by HooMan on 5/12/13.
- * Main Activity of the App
+ * New Line
+ * hello
+ * hi
  */
 public class CollectionActivity extends FragmentActivity {
 
@@ -65,6 +68,9 @@ public class CollectionActivity extends FragmentActivity {
      * Tag used on log messages.
      */
     public static final String TAG = "myApp";
+    public static final String ARG_OBJECT = "object";
+    public static final String QUERY_OBJECT = "query";
+    public static final String YOUTUBE_KEY = "AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU";
 
     //Neccessary non-cloud messaging variables
 
@@ -84,22 +90,31 @@ public class CollectionActivity extends FragmentActivity {
     private InterstitialAd interstitial;
     private AdView adView;
     private RelativeLayout.LayoutParams rLParams;
-    private  RelativeLayout rLayout;
+    private RelativeLayout rLayout;
 
     //In App Purchase
     boolean premium_status;
     private final static int DAYS_UNTIL_UPGRADE_PROMPT = 2;
     private final static int LAUNCHES_UNTIL_UPGRADE_PROMPT = 2;
 
+    ActionBar actionBar;
 
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
+
+        actionBar = getActionBar();
+
         PACKAGE_NAME = getApplicationContext().getPackageName();
 
-        //handle search intent
-        handleIntent(getIntent());
+        String [] menuArray = getResources().getStringArray(R.array.tab_titles);
+
+
+        // Specify that tabs should be displayed in the action bar.
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
 
         //setting the adapter and the list view arraylist
         // Create an adapter that when requested, will return a fragment representing an object in
@@ -120,13 +135,34 @@ public class CollectionActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mCollectionPagerAdapter);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        getActionBar().setSelectedNavigationItem(position);
+                    }
+                });
 
-        mViewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewPager.setCurrentItem(view.getId());
-            }
-        });
+//        mViewPager.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mViewPager.setCurrentItem(view.getId());
+//            }
+//        });
+
+
+
+
+        // Add 3 tabs, specifying the tab's text and TabListener
+        for (int i = 0; i < menuArray.length; i++) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText(menuArray[i])
+                            .setTabListener(tabListener));
+        }
+
 
 
         // Restore preferences
@@ -160,6 +196,30 @@ public class CollectionActivity extends FragmentActivity {
                 mServiceConn, Context.BIND_AUTO_CREATE);
 
     }
+
+
+
+    // Create a tab listener that is called when the user changes tabs.
+    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+        @Override
+        public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+            mViewPager.setCurrentItem(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+        }
+
+        @Override
+        public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+        }
+    };
+
+
+
+
 
     /**
      * In-App purchase service
@@ -195,23 +255,7 @@ public class CollectionActivity extends FragmentActivity {
         }
     };
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
 
-
-        handleIntent(intent);
-    }
-
-    //handle search intent
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            query = intent.getStringExtra(SearchManager.QUERY);
-            mCollectionPagerAdapter.notifyDataSetChanged();
-            mViewPager.setAdapter(mCollectionPagerAdapter);
-
-        }
-    }
 
     //Activity life cycles
     @Override
@@ -470,6 +514,35 @@ public class CollectionActivity extends FragmentActivity {
 
             // Start loading the ad in the background.
             adView.loadAd(adRequest);
+            final EasyTracker easyTracker = EasyTracker.getInstance(context);
+            adView.setAdListener(new AdListener() {
+
+                @Override
+                public void onAdOpened() {
+                    //Send the ad open event to google analytics
+                    easyTracker.send(MapBuilder
+                                    .createEvent("ui_event",     // Event category (required)
+                                            "button_press",  // Event action (required)
+                                            "banner_ad",   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    super.onAdFailedToLoad(errorCode);
+                    //Send the on ad fail to load event to google analytics
+                    easyTracker.send(MapBuilder
+                                    .createEvent("ui_event",     // Event category (required)
+                                            "ui_load_fail",  // Event action (required)
+                                            "banner_ad",   // Event label
+                                            null)            // Event value
+                                    .build()
+                    );
+                }
+
+            });
         }
 
     }
@@ -527,12 +600,9 @@ public class CollectionActivity extends FragmentActivity {
             Fragment fragment = new VideoListFragmentActivity();
             Bundle args = new Bundle();
             //ignore the search page if there is no query
-            if(query == null){
-                args.putInt(VideoListFragmentActivity.ARG_OBJECT, i+1 ); // Our object is just an integer :-P
-            }else{
-                args.putInt(VideoListFragmentActivity.ARG_OBJECT, i ); // Our object is just an integer :-P
-            }
-            args.putString(VideoListFragmentActivity.QUERY_OBJECT,query);
+            args.putInt(CollectionActivity.ARG_OBJECT, i ); // Our object is just an integer :-P
+
+            args.putString(CollectionActivity.QUERY_OBJECT,query);
             fragment.setArguments(args);
             return fragment;
         }
@@ -542,18 +612,12 @@ public class CollectionActivity extends FragmentActivity {
             // For this contrived example, we have a 100-object collection.
             int numberOfPages = menuArray.length;
             //ignore the search page if there is no query
-            if(query == null){
-                numberOfPages = numberOfPages - 1;
-            }
             return numberOfPages;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             //check if there is a search query
-            if(query == null){
-                position = position + 1;
-            }
             return menuArray[position];
         }
 
@@ -625,6 +689,32 @@ public class CollectionActivity extends FragmentActivity {
 
                     //Upgrade the app if the sku matched the upgrade package
                     if(sku.equals(getString(R.string.premium_product_id))) {
+
+                        // May return null if EasyTracker has not yet been initialized with a
+                        // property ID.
+                        EasyTracker easyTracker = EasyTracker.getInstance(this);
+
+                        easyTracker.send(MapBuilder
+                                        .createTransaction(jo.getString("orderId"), // (String) Transaction ID
+                                                "In-app Store",   // (String) Affiliation
+                                                0.99d,            // (Double) Order revenue
+                                                0.0d,            // (Double) Tax
+                                                0.0d,             // (Double) Shipping
+                                                "USD")            // (String) Currency code
+                                        .build()
+                        );
+
+                        easyTracker.send(MapBuilder
+                                        .createItem(jo.getString("orderId"),               // (String) Transaction ID
+                                                "Premium Upgrade",      // (String) Product name
+                                                "premium",                  // (String) Product SKU
+                                                "Paid Upgrade",        // (String) Product category
+                                                0.99d,                    // (Double) Product price
+                                                1L,                       // (Long) Product quantity
+                                                "USD")                    // (String) Currency code
+                                        .build()
+                        );
+
                         //Set the premium flag
                         SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
                         SharedPreferences.Editor editor = settings.edit();
@@ -655,6 +745,9 @@ public class CollectionActivity extends FragmentActivity {
             }
         }
     }
+
+
+
 
 
 
@@ -883,46 +976,6 @@ public class CollectionActivity extends FragmentActivity {
                 .show();
 
     }
-
-
-
-
-//    Thread postRegID = new Thread( new Runnable() {
-//
-//        @Override
-//        public void run() {
-//
-//            HttpClient httpclient = new DefaultHttpClient();
-//            HttpPost httppost = new HttpPost("http://30daylabs.com/cloud/gcm/device");
-//
-//            //Determine the version code of the app
-//            int versionNumber = 0;
-//            try {
-//                PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-//                versionNumber = pinfo.versionCode;
-//            } catch (PackageManager.NameNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//            // Create a new HttpClient and Post Header
-//            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//            nameValuePairs.add(new BasicNameValuePair("package_name", context.getPackageName()));
-//            nameValuePairs.add(new BasicNameValuePair("reg_id", regid));
-//            nameValuePairs.add(new BasicNameValuePair("app_version", String.valueOf(versionNumber)));
-//
-//            try {
-//                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//                HttpResponse response = httpclient.execute(httppost);
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            } catch (ClientProtocolException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    });
 
 
 

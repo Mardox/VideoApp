@@ -10,41 +10,40 @@ search : videos?q=hooman majd
     <string name="app_name">Nigerian Movies</string>
 
     <string-array name="query_duration">
-        <item>long</item> <!-- this is search -->
         <item>long</item>
         <item></item>
         <item>long</item>
         <item>long</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string-array name="queries">
-        <item></item> <!-- this is search -->
         <item>videos?q=nigerian new movies</item>
         <item>videos?q=nigerian movies trailer</item>
         <item>videos?q=nigerian old movies</item>
         <item>videos?q=nigerian movies</item>
+        <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Search Results</item>
         <item>New Movies</item>
         <item>Trailers</item>
         <item>Old Movies</item>
         <item>More</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL7F3FD721021AD036</string>
+    <string name="daily_pick_query">playlists/PL3947B02E09689ADF</string>
 
     <string name="admob_id_home">ca-app-pub-3230884902788293/7909562392</string>
+    <string name="admob_id_search">ca-app-pub-3230884902788293/9887637592</string>
     <string name="admob_id_interstitials">ca-app-pub-3230884902788293/1976473191</string>
     <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/6042644395</string>
 
     <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8oC5S0MucP7VA3vIiGiXTdHSdp3teFyKmBj6sZJ254ogTieCFa/yPhqajKgVvQyrN3uSPe1CIWm9UkPedHeLX/jR2EEgSm4/npOkmQoKhp/RJjV8Su7WrGq2TCUJJMHJDdTwv62wmkVdLVWTjp67jpHK6MmQZhTOifVqaOhb5wseeYhP0UWxsWvssTM1RpR2mshtVvmqSdK034LrV3lmRYsORGYbsRPsL/NdwzurE11ZK4Au5YdRMuvLWseqKoLlsbWgUQFQOeSd8E8waKmiVlllKfjO+GZF09qXRWP0OReiuVLbrXtQ1lJEMwlaDHZtihWaLVio1/aqFYYulhA+QIDAQAB</string>
 
     <string name="developer">ModernApps</string>
-    <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
     <string name="email">support@30DayLabs.com</string>
 
 </resources>
