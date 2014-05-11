@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.thirtydaylabs.snookertipsandtricks.R;
+import com.thirtydaylabs.toparabicmusic.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

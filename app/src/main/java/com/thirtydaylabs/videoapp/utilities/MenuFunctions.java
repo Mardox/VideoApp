@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.thirtydaylabs.snookertipsandtricks.R;
+import com.thirtydaylabs.toparabicmusic.R;
 import com.thirtydaylabs.videoapp.app.AboutActivity;
 import com.thirtydaylabs.videoapp.app.CollectionActivity;
 import com.thirtydaylabs.videoapp.app.PushActivity;

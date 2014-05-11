@@ -23,7 +23,7 @@ import android.widget.ProgressBar;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
-import com.thirtydaylabs.snookertipsandtricks.R;
+import com.thirtydaylabs.toparabicmusic.R;
 import com.thirtydaylabs.videoapp.utilities.EndlessScrollListener;
 
 import org.apache.http.HttpEntity;
