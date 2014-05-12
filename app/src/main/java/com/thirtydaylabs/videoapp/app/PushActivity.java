@@ -76,14 +76,10 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         }
 
 
-
-
-
-
         // connect view object and view id on xml
         youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
         // get YOUTUBE APIKEY
-        YOUTUBE_API_KEY = getString(R.string.youtube_apikey);
+        YOUTUBE_API_KEY = CollectionActivity.YOUTUBE_KEY;
 
         //Store the sharedprefrences
         prefs = getSharedPreferences(CollectionActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );

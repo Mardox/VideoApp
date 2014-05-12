@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,7 +61,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
         // get YOUTUBE APIKEY
 
-        YOUTUBE_API_KEY = getString(R.string.youtube_apikey);
+        YOUTUBE_API_KEY = CollectionActivity.YOUTUBE_KEY;
 
         // get video id from previous page
         Intent i = getIntent();
@@ -149,8 +147,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
                 // This is called when the Home (Up) button is pressed in the action bar.
                 // Create a simple intent that starts the hierarchical parent activity and
                 // use NavUtils in the Support Package to ensure proper handling of Up.
-                int interstitial_probability = (int)(Math.random() * (2));
-                if(interstitial != null && interstitial_probability == 0 ){
+                if(interstitial != null && randomBooleanSelector() ){
                     //RevMob Full Screen Ad
                     displayInterstitial();
                 }else{
@@ -164,20 +161,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     }
 
     private void returnToParent() {
-        Intent upIntent = new Intent(this, CollectionActivity.class);
-        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-            // This activity is not part of the application's task, so create a new task
-            // with a synthesized back stack.
-            TaskStackBuilder.from(this)
-                    // If there are ancestor activities, they should be added here.
-                    .addNextIntent(upIntent)
-                    .startActivities();
-            finish();
-        } else {
-            // This activity is part of the application's task, so simply
-            // navigate up to the hierarchical parent activity.
-            NavUtils.navigateUpTo(this, upIntent);
-        }
+        finish();
     }
 
     @Override
@@ -202,8 +186,8 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     {
         if (keyCode== KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
         {
-            int interstitial_probability = (int)(Math.random() * (2 + 1));
-            if(interstitial != null && interstitial_probability == 0 ){
+
+            if(interstitial != null && randomBooleanSelector() ){
                 //RevMob Full Screen Ad
                 displayInterstitial();
             }
@@ -218,6 +202,16 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         if (interstitial.isLoaded()) {
             interstitial.show();
         }
+    }
+
+
+    public boolean randomBooleanSelector(){
+
+        int probability = (int)(Math.random() * (2 + 1));
+        if(probability >= 1)
+            return true;
+        else
+            return false;
     }
 
 
