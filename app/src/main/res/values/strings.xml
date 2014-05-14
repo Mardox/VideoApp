@@ -11,7 +11,6 @@ search : videos?q=hooman majd
 
     <string-array name="query_duration">
         <item>long</item>
-        <item>long</item>
         <item></item>
         <item>long</item>
         <item>long</item>
@@ -19,7 +18,6 @@ search : videos?q=hooman majd
     </string-array>
 
     <string-array name="queries">
-        <item>dailyvideos?q=Myanmar Movies</item>
         <item>videos?q=New Myanmar Movies</item>
         <item>videos?q=Myanmar Movies trailer</item>
         <item>videos?q=Myanmar Movies movies</item>
@@ -30,7 +28,6 @@ search : videos?q=hooman majd
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>Daily Digest</item>
         <item>New</item>
         <item>Trailers</item>
         <item>Old</item>
