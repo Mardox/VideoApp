@@ -147,7 +147,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
                 // This is called when the Home (Up) button is pressed in the action bar.
                 // Create a simple intent that starts the hierarchical parent activity and
                 // use NavUtils in the Support Package to ensure proper handling of Up.
-                if(interstitial != null && randomBooleanSelector() ){
+                if(interstitial != null ){
                     //RevMob Full Screen Ad
                     displayInterstitial();
                 }else{
@@ -187,7 +187,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         if (keyCode== KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
         {
 
-            if(interstitial != null && randomBooleanSelector() ){
+            if(interstitial != null ){
                 //RevMob Full Screen Ad
                 displayInterstitial();
             }
