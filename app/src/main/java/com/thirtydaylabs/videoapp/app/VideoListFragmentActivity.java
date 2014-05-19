@@ -55,6 +55,9 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class VideoListFragmentActivity extends Fragment{
 
+    public static final String ARG_OBJECT = "object";
+    public static final String QUERY_OBJECT = "query";
+
     static final String ITEM_TYPE = "type";
     static final String KEY_ID = "id";
     static final String KEY_TITLE = "title";

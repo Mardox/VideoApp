@@ -71,6 +71,7 @@ public class CollectionActivity extends FragmentActivity {
     public static final String TAG = "myApp";
     public static final String ARG_OBJECT = "object";
     public static final String QUERY_OBJECT = "query";
+    public static final String YOUTUBE_KEY = "AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU";
 
     //Neccessary non-cloud messaging variables
 
@@ -976,46 +977,6 @@ public class CollectionActivity extends FragmentActivity {
                 .show();
 
     }
-
-
-
-
-//    Thread postRegID = new Thread( new Runnable() {
-//
-//        @Override
-//        public void run() {
-//
-//            HttpClient httpclient = new DefaultHttpClient();
-//            HttpPost httppost = new HttpPost("http://30daylabs.com/cloud/gcm/device");
-//
-//            //Determine the version code of the app
-//            int versionNumber = 0;
-//            try {
-//                PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-//                versionNumber = pinfo.versionCode;
-//            } catch (PackageManager.NameNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//            // Create a new HttpClient and Post Header
-//            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//            nameValuePairs.add(new BasicNameValuePair("package_name", context.getPackageName()));
-//            nameValuePairs.add(new BasicNameValuePair("reg_id", regid));
-//            nameValuePairs.add(new BasicNameValuePair("app_version", String.valueOf(versionNumber)));
-//
-//            try {
-//                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//                HttpResponse response = httpclient.execute(httppost);
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            } catch (ClientProtocolException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    });
 
 
 

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,7 +62,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
         // get YOUTUBE APIKEY
 
-        YOUTUBE_API_KEY = getString(R.string.youtube_apikey);
+        YOUTUBE_API_KEY = CollectionActivity.YOUTUBE_KEY;
 
         // get video id from previous page
         Intent i = getIntent();
@@ -147,7 +148,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
                 // This is called when the Home (Up) button is pressed in the action bar.
                 // Create a simple intent that starts the hierarchical parent activity and
                 // use NavUtils in the Support Package to ensure proper handling of Up.
-                if(interstitial != null ){
+                if(interstitial != null && randomBooleanSelector() ){
                     //RevMob Full Screen Ad
                     displayInterstitial();
                 }else{
@@ -187,7 +188,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         if (keyCode== KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
         {
 
-            if(interstitial != null ){
+            if(interstitial != null && randomBooleanSelector() ){
                 //RevMob Full Screen Ad
                 displayInterstitial();
             }
@@ -207,8 +208,9 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
 
     public boolean randomBooleanSelector(){
 
-        int probability = (int)(Math.random() * (2 + 1));
-        if(probability >= 1)
+        int probability = (int)(Math.random() * (3));
+        Log.i(CollectionActivity.TAG,"probability is : " + probability);
+        if(probability > 0)
             return true;
         else
             return false;
