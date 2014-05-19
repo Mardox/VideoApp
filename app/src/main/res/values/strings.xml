@@ -18,7 +18,7 @@ search : videos?q=hooman majd
     </string-array>
 
     <string-array name="queries">
-        <item>dailyvideos?q=pakistani songs</item>
+        <item>dailyvideos?q=pk songs</item>
         <item>videos?q=new pk songs</item>
         <item>videos?q=old pk songs</item>
         <item>videos?q=pk songs</item>

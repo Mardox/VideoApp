@@ -55,6 +55,9 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class VideoListFragmentActivity extends Fragment{
 
+    public static final String ARG_OBJECT = "object";
+    public static final String QUERY_OBJECT = "query";
+
     static final String ITEM_TYPE = "type";
     static final String KEY_ID = "id";
     static final String KEY_TITLE = "title";
@@ -212,7 +215,7 @@ public class VideoListFragmentActivity extends Fragment{
                     +query+"max-results=50&v=2&alt=jsonc&safeSearch=strict"
                     +startIndex+searchDuration+orderby+genre;
             //instantiate and execute AsyncTask
-            // Log.i(CollectionActivity.TAG,searchURL);
+            Log.i(CollectionActivity.TAG,searchURL);
             if(!prgLoading.isShown()){
                 prgLoading.setVisibility(View.VISIBLE);
             }
@@ -296,25 +299,29 @@ public class VideoListFragmentActivity extends Fragment{
                         }
 
                         //get the username and text content for each tweet
-                        String id = item.getString("id");
-                        String title = item.getString("title");
-                        String thumbnail = "http://img.youtube.com/vi/"+id+"/mqdefault.jpg";
-                        String duration = item.getString("duration");
-                        String views = item.getString("viewCount");
+                        if(item.has("viewCount")) {
 
-                        // adding each child node to HashMap key =&gt; value
-                        map.put(ITEM_TYPE, "video");
-                        map.put(KEY_ID, id);
-                        map.put(KEY_TITLE, title);
-                        map.put(KEY_THUMB, thumbnail);
-                        map.put(KEY_DURATION, duration);
-                        map.put(KEY_VIEW_COUNT, views);
+                            String id = item.getString("id");
+                            String title = item.getString("title");
+                            String thumbnail = "http://img.youtube.com/vi/" + id + "/mqdefault.jpg";
+                            String duration = item.getString("duration");
+                            String views = item.getString("viewCount");
 
-                        itemsList.add(map);
+                            // adding each child node to HashMap key =&gt; value
+                            map.put(ITEM_TYPE, "video");
+                            map.put(KEY_ID, id);
+                            map.put(KEY_TITLE, title);
+                            map.put(KEY_THUMB, thumbnail);
+                            map.put(KEY_DURATION, duration);
+                            map.put(KEY_VIEW_COUNT, views);
+
+                            itemsList.add(map);
+                        }
 
                     }
+
                 } catch (Exception e) {
-                    Log.e(CollectionActivity.TAG, "Whoops - something went wrong!" + e.toString());
+                    Log.e(CollectionActivity.TAG, "Whoops:"+current_page + e.toString());
                     noResultErrorDialog();
                     e.printStackTrace();
                 }
