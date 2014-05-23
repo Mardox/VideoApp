@@ -29,7 +29,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.thirtydaylabs.myanmarmovies.R;
+import com.thirtydaylabs.banglamovies.R;
 
 /**
  * Created by HooMan on 18/04/2014.
