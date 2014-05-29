@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:yourapp="http://schemas.android.com/apk/res-auto">
     <!-- Search, should appear as action button -->
     <item android:id="@+id/search"
         android:title="@string/search_title"
         android:icon="@drawable/ic_action_search"
-        android:showAsAction="collapseActionView|always"
-        android:actionViewClass="android.widget.SearchView" />
+        yourapp:showAsAction="collapseActionView|always"
+        yourapp:actionViewClass="android.widget.SearchView" />
     <item
         android:id="@+id/action_refresh"
-        android:showAsAction="always"
+        yourapp:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_shuffle"
         android:title="@string/action_refresh" />
     <item
         android:id="@+id/menu_item_share"
-        android:showAsAction="ifRoom"
+        yourapp:showAsAction="always|withText"
         android:icon="@drawable/ic_action_share"
         android:title="@string/action_share" />
     <!--<item android:id="@+id/action_search"-->
@@ -25,29 +26,29 @@
 
     <item android:id="@+id/action_daily_video"
         android:title="@string/action_daily_video"
-        android:showAsAction="ifRoom"
+        yourapp:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_go_to_today"
         />
 
     <item android:id="@+id/action_upgrade"
         android:title="@string/action_upgrade"
-        android:showAsAction="ifRoom"
+        yourapp:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_select_all"
         />
 
     <item android:id="@+id/action_rate"
         android:title="@string/action_rate"
-        android:showAsAction="ifRoom"
+        yourapp:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_important"
         />
     <item android:id="@+id/action_mores"
         android:title="@string/action_more"
-        android:showAsAction="ifRoom"
+        yourapp:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_favorite"
         />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:showAsAction="ifRoom"
+        yourapp:showAsAction="always"
         android:icon="@drawable/ic_action_about"
         />
 </menu>

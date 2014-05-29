@@ -2,7 +2,6 @@ package com.thirtydaylabs.videoapp.app;
 
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,10 +21,13 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -60,7 +62,7 @@ import java.util.ArrayList;
  * Created by HooMan on 5/12/13.
  * pksongs
  */
-public class CollectionActivity extends FragmentActivity {
+public class CollectionActivity extends ActionBarActivity {
 
     /**
      * Tag used on log messages.
@@ -103,7 +105,7 @@ public class CollectionActivity extends FragmentActivity {
         setContentView(R.layout.activity_collection);
 
 
-        actionBar = getActionBar();
+        actionBar = getSupportActionBar();
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
 
@@ -199,18 +201,19 @@ public class CollectionActivity extends FragmentActivity {
 
     // Create a tab listener that is called when the user changes tabs.
     ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+
         @Override
-        public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
             mViewPager.setCurrentItem(tab.getPosition());
         }
 
         @Override
-        public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
         }
 
         @Override
-        public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
         }
     };
@@ -325,29 +328,31 @@ public class CollectionActivity extends FragmentActivity {
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+                (SearchView) MenuItemCompat.getActionView(searchMenuItem);
 
-        //listener to close the search view after submit
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        if (searchView != null) {
+            searchView.setSearchableInfo(
+                    searchManager.getSearchableInfo(getComponentName()));
 
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                MenuItem searchMenuItem = getSearchMenuItem();
-                if (searchMenuItem != null) {
-                    searchMenuItem.collapseActionView();
+            //listener to close the search view after submit
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    MenuItem searchMenuItem = getSearchMenuItem();
+                    if (searchMenuItem != null) {
+                        searchMenuItem.collapseActionView();
+                    }
+                    return false;
                 }
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return true;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return true;
+                }
+            });
 
-
+        }
         if(premium_status) {
             MenuItem item = menu.findItem(R.id.action_upgrade);
             item.setVisible(false);

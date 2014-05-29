@@ -137,11 +137,6 @@ public class VideoListFragmentActivity extends Fragment{
     }
 
 
-    public void refresh(){
-        searchVideos(0, true);
-    }
-
-
     String query ="";
     String orderby ="";
 

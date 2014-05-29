@@ -2,6 +2,7 @@ package com.thirtydaylabs.videoapp.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.thirtydaylabs.pksongs.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -26,6 +30,8 @@ public class listViewAdapter extends BaseAdapter{
     private Activity activity;
     private ArrayList<HashMap<String, String>> data;
     private static LayoutInflater inflater=null;
+
+
 
     public listViewAdapter(Activity a, ArrayList<HashMap<String, String>> d, Context context) {
         activity = a;
@@ -48,7 +54,7 @@ public class listViewAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-            View vi = inflater.inflate(R.layout.video_card_row, null);
+            final View vi = inflater.inflate(R.layout.video_card_row, null);
             assert vi != null;
             TextView title = (TextView)vi.findViewById(R.id.title); // title
             TextView sponsored = (TextView)vi.findViewById(R.id.sponsored); // title
@@ -56,7 +62,9 @@ public class listViewAdapter extends BaseAdapter{
             TextView duration = (TextView)vi.findViewById(R.id.duration); // title
             TextView view_count = (TextView)vi.findViewById(R.id.views); // title
 
-            HashMap<String, String> video;
+            final ImageView favoriteBT = (ImageView) vi.findViewById(R.id.favorite_image);
+
+            final HashMap<String, String> video;
             video = data.get(position);
 
             // Setting all values in listview
@@ -65,7 +73,7 @@ public class listViewAdapter extends BaseAdapter{
 //                sponsored.setVisibility(sponsored.VISIBLE);
 //            }
             title.setText(video.get(VideoListFragmentActivity.KEY_TITLE));
-            //Setting the text for view count, adding the thousand separators and view string
+
             String commaSeparatedViewCount = NumberFormat.getNumberInstance(Locale.US).format(
                     Integer.parseInt(video.get(VideoListFragmentActivity.KEY_VIEW_COUNT)));
 
@@ -74,8 +82,101 @@ public class listViewAdapter extends BaseAdapter{
             duration.setText(timeConvertor(video.get(VideoListFragmentActivity.KEY_DURATION)));
 
             Picasso.with(activity.getApplicationContext()).load(video.get(VideoListFragmentActivity.KEY_THUMB)).into(thumb_image);
+
+            SharedPreferences prefs  = vi.getContext().getSharedPreferences(CollectionActivity.PREFS_NAME, vi.getContext().MODE_PRIVATE);
+
+            JSONArray jsonArray = new JSONArray();
+
+            try {
+                jsonArray = new JSONArray(prefs.getString("favorites", "[]"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            boolean favoriteExist = false;
+            for (int i = 0; i < jsonArray.length(); i++){
+                try {
+                    if(jsonArray.getString(i).equals(video.get(VideoListFragmentActivity.KEY_ID))){
+                        favoriteExist = true;
+                        break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (favoriteExist){
+                favoriteBT.setImageResource(R.drawable.ic_action_favorite);
+            }
+
+
+
+
+            favoriteBT.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    SharedPreferences prefs  = vi.getContext().getSharedPreferences(CollectionActivity.PREFS_NAME, vi.getContext().MODE_PRIVATE);
+
+                    JSONArray jsonArray = new JSONArray();
+
+                    try {
+                        jsonArray = new JSONArray(prefs.getString("favorites", "[]"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    boolean favoriteExist = false;
+                    int favoriteExistIndex = 0;
+                    for (int i = 0; i < jsonArray.length(); i++){
+                        try {
+                            if(jsonArray.getString(i).equals(video.get(VideoListFragmentActivity.KEY_ID))){
+                                favoriteExist = true;
+                                favoriteExistIndex = i;
+                                break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (favoriteExist){
+                        favoriteBT.setImageResource(R.drawable.ic_action_favorite_holo);
+                        //remove the id from the favorite
+
+                       jsonArray =  RemoveJSONArray(jsonArray, favoriteExistIndex);
+                    }else{
+                        favoriteBT.setImageResource(R.drawable.ic_action_favorite);
+                        jsonArray.put(video.get(VideoListFragmentActivity.KEY_ID));
+                    }
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("favorites", jsonArray.toString());
+                    editor.commit();
+
+
+
+                }
+            });
+
             return vi;
     }
+
+
+    public static JSONArray RemoveJSONArray( JSONArray jarray,int pos) {
+
+        JSONArray Njarray=new JSONArray();
+        try{
+            for(int i=0;i<jarray.length();i++){
+                if(i!=pos)
+                    Njarray.put(jarray.get(i));
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return Njarray;
+
+    }
+
 
 
     private String timeConvertor (String interval){

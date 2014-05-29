@@ -35,15 +35,10 @@
             android:background="@android:color/darker_gray"/>
 
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:background="@drawable/gradient_reverse"
-            android:layout_height="80dp"
-            android:maxLines="2"
-            android:scrollHorizontally="false"
-            android:textSize="22dp"
-            android:textColor="@color/card_white"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             android:paddingBottom="20dp"
@@ -51,8 +46,30 @@
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
-            android:layout_alignTop="@id/list_image"/>
+            android:layout_alignTop="@id/list_image"
+            android:background="@drawable/gradient_reverse">
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:maxLines="2"
+                android:text="Hello this is the title, you can add new titles here or just carry on"
+                android:scrollHorizontally="false"
+                android:textSize="22dp"
+                android:textColor="@color/card_white"
+                />
+
+            <ImageView
+                android:id="@+id/favorite_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_action_favorite_holo"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/views"
