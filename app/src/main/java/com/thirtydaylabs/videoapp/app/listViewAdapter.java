@@ -32,7 +32,6 @@ public class listViewAdapter extends BaseAdapter{
     private static LayoutInflater inflater=null;
 
 
-
     public listViewAdapter(Activity a, ArrayList<HashMap<String, String>> d, Context context) {
         activity = a;
         data=d;

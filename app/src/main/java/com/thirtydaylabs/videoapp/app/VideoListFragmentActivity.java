@@ -65,9 +65,6 @@ public class VideoListFragmentActivity extends Fragment{
     static final String KEY_DURATION = "duration";
     static final String KEY_VIEW_COUNT = "viewCount";
 
-
-
-
     GridView videoList;
     ProgressBar prgLoading;
 
@@ -277,7 +274,7 @@ public class VideoListFragmentActivity extends Fragment{
                     //get JSONArray contained within the JSONObject retrieved - "results"
                     JSONObject data = resultObject.getJSONObject("data");
                     JSONArray items = data.getJSONArray("items");
-                    ;
+
 
                     //loop through each item in the tweet array
                     for (int t = 0; t < items.length(); t++) {
