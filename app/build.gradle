@@ -1,9 +1,10 @@
 apply plugin: 'android'
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
+        applicationId "com.thirtydaylabs.nigerianmovies"
         minSdkVersion 11
         targetSdkVersion 19
         versionCode 21
