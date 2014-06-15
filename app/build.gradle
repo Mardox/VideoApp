@@ -4,11 +4,11 @@ android {
     buildToolsVersion '19.1.0'
 
     defaultConfig {
-        applicationId "com.thirtydaylabs.nigerianmovies"
+        applicationId "com.mardox.thirtydaylabs"
         minSdkVersion 11
         targetSdkVersion 19
-        versionCode 21
-        versionName "4.5.2"
+        versionCode 1
+        versionName "1.0.0"
     }
 
     signingConfigs {

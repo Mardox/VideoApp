@@ -7,43 +7,40 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">Nigerian Movies</string>
+    <string name="app_name">30 Day Labs</string>
 
     <string-array name="query_duration">
-        <item>long</item>
         <item></item>
-        <item>long</item>
-        <item>long</item>
+        <item></item>
+        <item></item>
         <item></item> <!-- this is search -->
     </string-array>
 
     <string-array name="queries">
-        <item>videos?q=nigerian new movies</item>
-        <item>videos?q=nigerian movies trailer</item>
-        <item>videos?q=nigerian old movies</item>
-        <item>videos?q=nigerian movies</item>
+        <item>users/hoomanmar/uploads</item>
+        <item>playlists/PLwRIbkhLEe3CMED8BeyG1TrJoZQLNzJZ_</item>
+        <item>playlists/PLwRIbkhLEe3B9S9ro8D8rSaFI17tFMzVR</item>
         <item></item> <!-- this is search -->
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
-        <item>New Movies</item>
-        <item>Trailers</item>
-        <item>Old Movies</item>
-        <item>More</item>
+        <item>New</item>
+        <item>Tech Skills</item>
+        <item>Business Skills</item>
     </string-array>
 
-    <string name="daily_pick_query">playlists/PL3947B02E09689ADF</string>
+    <string name="daily_pick_query">playlists/PLwRIbkhLEe3CMED8BeyG1TrJoZQLNzJZ_</string>
 
-    <string name="admob_id_home">ca-app-pub-3230884902788293/7909562392</string>
-    <string name="admob_id_search">ca-app-pub-3230884902788293/9887637592</string>
-    <string name="admob_id_interstitials">ca-app-pub-3230884902788293/1976473191</string>
-    <string name="admob_id_interstitials_daily">ca-app-pub-3230884902788293/6042644395</string>
+    <string name="admob_id_home"></string>
+    <string name="admob_id_search"></string>
+    <string name="admob_id_interstitials"></string>
+    <string name="admob_id_interstitials_daily"></string>
 
-    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8oC5S0MucP7VA3vIiGiXTdHSdp3teFyKmBj6sZJ254ogTieCFa/yPhqajKgVvQyrN3uSPe1CIWm9UkPedHeLX/jR2EEgSm4/npOkmQoKhp/RJjV8Su7WrGq2TCUJJMHJDdTwv62wmkVdLVWTjp67jpHK6MmQZhTOifVqaOhb5wseeYhP0UWxsWvssTM1RpR2mshtVvmqSdK034LrV3lmRYsORGYbsRPsL/NdwzurE11ZK4Au5YdRMuvLWseqKoLlsbWgUQFQOeSd8E8waKmiVlllKfjO+GZF09qXRWP0OReiuVLbrXtQ1lJEMwlaDHZtihWaLVio1/aqFYYulhA+QIDAQAB</string>
+    <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw/rm3d0c/z7oj8ziflaCrO78tMj9AfVGwPflUnhWP+N11eAL0W4r65B2zI7JtxhrPfPGGBLfGGMbIhc4Nvk8r9q7ZMxlmtHPrqjf16mxL7Fz4eWSEh4FWG9EStAgJ25jYARxi98ydHruHK0e4X8Azms2AjeW1roQ4/XRLvYb5m19dNgwhkxXeAIyjEuP3KwGFY7wSSiMijVLpVIvqWDufkclozpzDzDmMnxeDwyLyJTFM2jM8MYM+Ynyy0CZvcYnKIXZs+wleMGG0qgTQfiUdFgH1xYmVThcUzswELqt6VRBeGRk8+d6Ir2/EkBCXyAvi82YEXPklxUOgHXp8Ke3lQIDAQAB</string>
 
-    <string name="developer">ModernApps</string>
+    <string name="developer">Mardox</string>
     <string name="email">support@30DayLabs.com</string>
 
 </resources>

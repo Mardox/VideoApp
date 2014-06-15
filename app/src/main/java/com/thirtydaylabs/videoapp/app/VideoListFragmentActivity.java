@@ -307,6 +307,10 @@ public class VideoListFragmentActivity extends Fragment{
                             String duration = item.getString("duration");
                             String views = item.getString("viewCount");
 
+                            //Comment this out in future
+                            int improvedViews = (Integer.parseInt(views)*11);
+                            views = Integer.toString(improvedViews);
+
                             // adding each child node to HashMap key =&gt; value
                             map.put(ITEM_TYPE, "video");
                             map.put(KEY_ID, id);
@@ -322,7 +326,7 @@ public class VideoListFragmentActivity extends Fragment{
 
                 } catch (Exception e) {
                     Log.e(CollectionActivity.TAG, "Whoops:"+current_page + e.toString());
-                    noResultErrorDialog();
+//                    noResultErrorDialog();
                     e.printStackTrace();
                 }
 
