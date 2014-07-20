@@ -7,32 +7,32 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">PK Songs</string>
+    <string name="app_name">Web Development</string>
 
     <string-array name="query_duration">
         <item></item> <!-- this is search -->
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
-        <item>short</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 
     <string-array name="queries">
         <item></item> <!-- this is search -->
-        <item>dailyvideos?q=pk songs</item>
-        <item>videos?q=new pk music</item>
-        <item>videos?q=old pk songs</item>
-        <item>videos?q=pk songs</item>
+        <item>videos?q=html tutorials</item>
+        <item>videos?q=javascript tutorials</item>
+        <item>videos?q=php tutorials</item>
+        <item>videos?q=css tutorials</item>
     </string-array>
 
     <string name="genre"></string>
 
     <string-array name="tab_titles">
         <item>Search Results</item>
-        <item>Daily Digest</item>
-        <item>New</item>
-        <item>Old</item>
-        <item>More</item>
+        <item>Html</item>
+        <item>Javascript</item>
+        <item>PHP</item>
+        <item>CSS</item>
     </string-array>
 
     <string name="daily_pick_query">playlists/PL20D110E235D198ED</string>
