@@ -542,6 +542,11 @@ public class CollectionActivity extends FragmentActivity {
                     );
                 }
 
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    finish();
+                }
             });
         }
 
