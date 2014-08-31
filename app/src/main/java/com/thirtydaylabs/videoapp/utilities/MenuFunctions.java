@@ -162,7 +162,7 @@ public class MenuFunctions {
                         }else{
                             editor.putBoolean("noDailyAlert", true);
                         }
-                        editor.commit();
+                        editor.apply();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
