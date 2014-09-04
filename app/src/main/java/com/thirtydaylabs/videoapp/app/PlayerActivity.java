@@ -6,16 +6,27 @@ package com.thirtydaylabs.videoapp.app;
  */
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.ads.AdListener;
@@ -23,6 +34,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerView;
@@ -46,6 +58,8 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     // In app purchase flag
     Boolean premium_status;
 
+    WebView myWebView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +69,13 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
 
         premium_status = settings.getBoolean("premiumStatus", false);
 
-
-
         // connect view object and view id on xml
         youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
+        myWebView = (WebView) findViewById( R.id.videoView );
+
         // get YOUTUBE APIKEY
 
-        YOUTUBE_API_KEY = getString(R.string.youtube_apikey);
+        YOUTUBE_API_KEY = CollectionActivity.YOUTUBE_KEY;
 
         // get video id from previous page
         Intent i = getIntent();
@@ -79,15 +93,57 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
             actionBar.setHomeButtonEnabled(true);
         }
 
-        // display youtube player
-        youTubePlayerView.initialize(YOUTUBE_API_KEY, this);
 
         //Initiate admob if the premium package does not exists
         if(!premium_status){
             adMobInterstitialInitiate();
         }
 
+
+        initiatePlayer();
+
+
     }
+
+
+
+    private void initiatePlayer(){
+
+        if(YouTubeIntents.isYouTubeInstalled(context)){
+
+            // display youtube player
+            youTubePlayerView.initialize(YOUTUBE_API_KEY, this);
+            youTubePlayerView.setVisibility(View.VISIBLE);
+
+        }else{
+
+
+            myWebView.setVisibility(View.VISIBLE);
+            myWebView.setWebChromeClient(new WebChromeClient());
+            myWebView.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
+
+            //String playerURL="http://modernapps.biz/api/player.php?videoid="+ID;
+
+            String playVideo ="<style>body{margin: 0px;margin-top: -30px;background-color: black;} .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='http://www.youtube.com/embed/"+ID+"?rel=0&autoplay=1' frameborder='0' allowfullscreen></iframe></div>";
+
+            myWebView.getSettings().setJavaScriptEnabled(true);
+            myWebView.setVerticalScrollBarEnabled(false);
+            myWebView.setHorizontalScrollBarEnabled(false);
+            //myWebView.loadUrl(playerURL);
+            myWebView.loadData(playVideo, "text/html", "utf-8");
+            WebViewClient client = new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    Log.d("MYAPP", "Page loaded");
+                }
+            };
+            myWebView.setWebViewClient(client);
+
+        }
+
+    }
+
+
 
 
     private void adMobInterstitialInitiate(){
@@ -121,8 +177,6 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu items for use in the action bar
@@ -147,13 +201,8 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
                 // This is called when the Home (Up) button is pressed in the action bar.
                 // Create a simple intent that starts the hierarchical parent activity and
                 // use NavUtils in the Support Package to ensure proper handling of Up.
-                if(interstitial != null && randomBooleanSelector() ){
-                    //RevMob Full Screen Ad
-                    displayInterstitial();
-                }else{
-                    returnToParent();
-                }
-
+                //RevMob Full Screen Ad
+                displayInterstitial();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -171,6 +220,11 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         EasyTracker.getInstance(this).activityStart(this);  // Add this method.
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initiatePlayer();
+    }
 
     @Override
     public void onStop() {
@@ -179,6 +233,11 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        myWebView.loadUrl("about:blank");
+    }
 
     //COverride the back button
     @Override
@@ -186,29 +245,31 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     {
         if (keyCode== KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
         {
-
-            if(interstitial != null && randomBooleanSelector() ){
-                //RevMob Full Screen Ad
-                displayInterstitial();
-            }
-            // return true;
+            //RevMob Full Screen Ad
+            displayInterstitial();
         }
+        // return true;
         return super.onKeyDown(keyCode, event);
     }
 
-
     // Invoke displayInterstitial() when you are ready to display an interstitial.
     public void displayInterstitial() {
-        if (interstitial.isLoaded()) {
-            interstitial.show();
+        myWebView.loadUrl("about:blank");
+        if(interstitial != null && randomBooleanSelector() ) {
+            if (interstitial.isLoaded()) {
+                interstitial.show();
+            }
+        }else{
+            returnToParent();
         }
     }
 
 
     public boolean randomBooleanSelector(){
 
-        int probability = (int)(Math.random() * (2 + 1));
-        if(probability >= 1)
+        int probability = (int)(Math.random() * (3));
+        Log.i(CollectionActivity.TAG,"probability is : " + probability);
+        if(probability > 0)
             return true;
         else
             return false;

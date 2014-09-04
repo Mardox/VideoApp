@@ -7,7 +7,7 @@ search : videos?q=hooman majd
 -->
 <resources>
 
-    <string name="app_name">Gymnastics Lessons</string>
+    <string name="app_name">Gymnastics Videos</string>
 
     <string-array name="query_duration">
         <item></item>
@@ -48,6 +48,6 @@ search : videos?q=hooman majd
 
     <string name="developer">ModernApps</string>
     <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
-    <string name="email">support@30DayLabs.com</string>
+    <string name="email">support@ModernApps.biz</string>
 
 </resources>

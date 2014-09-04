@@ -2,12 +2,15 @@ package com.thirtydaylabs.videoapp.app;
 
 import android.app.ActionBar;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -17,8 +20,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.ads.AdListener;
@@ -26,10 +36,25 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.thirtydaylabs.gymnasticstipsandtricks.R;
 import com.thirtydaylabs.videoapp.utilities.MenuFunctions;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by HooMan on 12/08/13.
@@ -43,6 +68,9 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     String ID;
     String TITLE;
 
+    VideoView videoView;
+    String videoUrl;
+
     Context context = this;
 
     private InterstitialAd interstitial;
@@ -50,11 +78,18 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     YouTubePlayerView youTubePlayerView;
     SharedPreferences prefs;
 
+    WebView myWebView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_layout);
 
+
+        // connect view object and view id on xml
+        youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
+
+        myWebView = (WebView) findViewById( R.id.videoView );
 
         setTitle("More Here");
         // Make sure we're running on Honeycomb or higher to use ActionBar APIs
@@ -76,14 +111,7 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         }
 
 
-
-
-
-
-        // connect view object and view id on xml
-        youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
-        // get YOUTUBE APIKEY
-        YOUTUBE_API_KEY = getString(R.string.youtube_apikey);
+//        videoView = (VideoView)findViewById(R.id.videoView);
 
         //Store the sharedprefrences
         prefs = getSharedPreferences(CollectionActivity.PREFS_NAME, Context.MODE_MULTI_PROCESS );
@@ -91,10 +119,50 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         Log.i("Daily SP", ID);
 
         // display youtube player
-        youTubePlayerView.initialize(YOUTUBE_API_KEY, this);
         adMobInterstitialInitiate();
 
+        initiatePlayer();
+
     }
+
+
+    private void initiatePlayer(){
+
+        if(YouTubeIntents.isYouTubeInstalled(context)){
+
+            // display youtube player
+            youTubePlayerView.initialize(YOUTUBE_API_KEY, this);
+            youTubePlayerView.setVisibility(View.VISIBLE);
+
+        }else{
+
+
+            myWebView.setVisibility(View.VISIBLE);
+            myWebView.setWebChromeClient(new WebChromeClient());
+            myWebView.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
+
+            //String playerURL="http://modernapps.biz/api/player.php?videoid="+ID;
+
+            String playVideo ="<style>body{margin: 0px;margin-top: -30px;background-color: black;} .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='http://www.youtube.com/embed/"+ID+"?rel=0&autoplay=1' frameborder='0' allowfullscreen></iframe></div>";
+
+            myWebView.getSettings().setJavaScriptEnabled(true);
+            myWebView.setVerticalScrollBarEnabled(false);
+            myWebView.setHorizontalScrollBarEnabled(false);
+            //myWebView.loadUrl(playerURL);
+            myWebView.loadData(playVideo, "text/html", "utf-8");
+            WebViewClient client = new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    Log.d("MYAPP", "Page loaded");
+                }
+            };
+            myWebView.setWebViewClient(client);
+
+        }
+
+    }
+
+
 
     /**
      * Display interstitial admob ad
@@ -167,7 +235,12 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         super.onStart();
         // The rest of your onStart() code.
         EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initiatePlayer();
     }
 
 
@@ -181,9 +254,14 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 
     @Override
-    public void onDestroy()
-    {
+    protected void onPause() {
+        super.onPause();
+        myWebView.loadUrl("about:blank");
+    }
 
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
         finish();
     }
@@ -209,6 +287,7 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     * Invoke displayInterstitial() when you are ready to display an interstitial.
     */
     public void displayInterstitial() {
+        myWebView.loadUrl("about:blank");
         SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
         Boolean premium_status = settings.getBoolean("premiumStatus", false);
         if (interstitial.isLoaded() && !premium_status) {
@@ -234,6 +313,8 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         }
     }
 
+
+
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider,
                                         YouTubeInitializationResult result) {
@@ -247,13 +328,7 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
                                         boolean wasRestored) {
         try{
             if (!wasRestored) {
-
                 player.loadVideo(ID);
-
-                //Dismiss the notifications
-                NotificationManager manager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
-                manager.cancel(1);
-
             }
         }
         catch(IllegalStateException ise){
@@ -262,11 +337,5 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         }
     }
 
-
-//    @Override
-//    public void onDismissScreen(Ad ad) {
-//        final Activity act = this;
-//        act.finish();
-//    }
 
 }
