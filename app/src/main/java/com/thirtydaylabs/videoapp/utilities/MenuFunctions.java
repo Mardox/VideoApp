@@ -28,7 +28,7 @@ public class MenuFunctions {
     public static boolean openShare(Context context){
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + context.getPackageName());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "amzn://apps/android?p=" + context.getPackageName());
         context.startActivity(Intent.createChooser(shareIntent, "Share..."));
         return true;
     }
@@ -57,10 +57,10 @@ public class MenuFunctions {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //Try Google play
-        intent.setData(Uri.parse("market://details?id="+context.getPackageName()));
+        intent.setData(Uri.parse("amzn://apps/android?p="+context.getPackageName()));
         if (MyStartActivity(intent, context) == false) {
             //Market (Google play) app seems not installed, let's try to open a webbrowser
-            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id="+context.getPackageName()));
+            intent.setData(Uri.parse("http://www.amazon.com/gp/mas/dl/android?p="+context.getPackageName()));
             if (MyStartActivity(intent, context) == false) {
                 //Well if this also fails, we have run out of options, inform the user.
                 Toast.makeText(context, "Could not open Android market, please install the market app.", Toast.LENGTH_SHORT).show();
@@ -73,10 +73,10 @@ public class MenuFunctions {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //Try Google play
-        intent.setData(Uri.parse("market://developer?id="+context.getResources().getString(R.string.developer)));
+        intent.setData(Uri.parse("amzn://apps/android?p="+context.getPackageName()+"&showAll=1"));
         if (MyStartActivity(intent, context) == false) {
             //Market (Google play) app seems not installed, let's try to open a webbrowser
-            intent.setData(Uri.parse("https://play.google.com/store/apps/developer?id="+context.getResources().getString(R.string.developer)));
+            intent.setData(Uri.parse("http://www.amazon.com/gp/mas/dl/android?p="+context.getPackageName()+"&showAll=1"));
             if (MyStartActivity(intent, context) == false) {
                 //Well if this also fails, we have run out of options, inform the user.
                 Toast.makeText(context, "Could not open Android market, please install the market app.", Toast.LENGTH_SHORT).show();
@@ -130,7 +130,7 @@ public class MenuFunctions {
 
      public static boolean settings(Context context){
 
-        final ArrayList mSelectedItems  = new ArrayList();  // Where we track the selected items
+        final ArrayList<Integer> mSelectedItems  = new ArrayList<Integer>();  // Where we track the selected items
         boolean[] ticked = new boolean[10];
         final SharedPreferences prefs = context.getSharedPreferences(CollectionActivity.PREFS_NAME, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = prefs.edit();

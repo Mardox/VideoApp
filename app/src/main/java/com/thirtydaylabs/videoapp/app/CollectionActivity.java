@@ -191,9 +191,9 @@ public class CollectionActivity extends FragmentActivity {
         appOfferDialog();
 
 
-        //Bind the in-app service
-        bindService(new Intent("com.android.vending.billing.InAppBillingService.BIND"),
-                mServiceConn, Context.BIND_AUTO_CREATE);
+//        //Bind the in-app service
+//        bindService(new Intent("com.android.vending.billing.InAppBillingService.BIND"),
+//                mServiceConn, Context.BIND_AUTO_CREATE);
 
     }
 
@@ -224,36 +224,36 @@ public class CollectionActivity extends FragmentActivity {
     /**
      * In-App purchase service
      */
-    IInAppBillingService mService;
-
-    ServiceConnection mServiceConn = new ServiceConnection() {
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mService = null;
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name,
-                                       IBinder service) {
-            mService = IInAppBillingService.Stub.asInterface(service);
-            try {
-                int response = mService.isBillingSupported(3,getPackageName(),"inapp");
-                if(response == 0) {
-                    //has billing
-                    checkPurchases();
-                }else{
-                    // no billing V3
-                    MenuItem item = mMenu.findItem(R.id.action_upgrade);
-                    if (item != null) {
-                        item.setVisible(false);
-                    }
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-        }
-    };
+//    IInAppBillingService mService;
+//
+//    ServiceConnection mServiceConn = new ServiceConnection() {
+//        @Override
+//        public void onServiceDisconnected(ComponentName name) {
+//            mService = null;
+//        }
+//
+//        @Override
+//        public void onServiceConnected(ComponentName name,
+//                                       IBinder service) {
+//            mService = IInAppBillingService.Stub.asInterface(service);
+//            try {
+//                int response = mService.isBillingSupported(3,getPackageName(),"inapp");
+//                if(response == 0) {
+//                    //has billing
+//                    checkPurchases();
+//                }else{
+//                    // no billing V3
+//                    MenuItem item = mMenu.findItem(R.id.action_upgrade);
+//                    if (item != null) {
+//                        item.setVisible(false);
+//                    }
+//                }
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    };
 
 
 
@@ -294,9 +294,9 @@ public class CollectionActivity extends FragmentActivity {
 
         super.onDestroy();
 
-        if (mService != null) {
-            unbindService(mServiceConn);
-        }
+//        if (mService != null) {
+//            unbindService(mServiceConn);
+//        }
     }
 
 
@@ -380,7 +380,7 @@ public class CollectionActivity extends FragmentActivity {
                 return true;
             case R.id.action_upgrade:
 //                MenuFunctions.upgrade(context);
-                purchase();
+//                purchase();
                 return true;
 //            case R.id.action_about:
 //                MenuFunctions.openAbout(context);
@@ -628,42 +628,42 @@ public class CollectionActivity extends FragmentActivity {
     /**
      * Purchase Item
      */
-    private void purchase(){
-
-
-        try {
-            int response = mService.isBillingSupported(3,getPackageName(),"inapp");
-            if(response == 0) {
-                //has billing
-                String SKU = getString(R.string.premium_product_id);
-                try {
-                    Bundle buyIntentBundle = mService.getBuyIntent(3, context.getPackageName(),
-                            SKU, "inapp", null);
-                    PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
-                    assert pendingIntent != null;
-                    startIntentSenderForResult(pendingIntent.getIntentSender(),
-                            1001, new Intent(), 0, 0, 0);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (IntentSender.SendIntentException e) {
-                    e.printStackTrace();
-                } catch (Exception e){
-                    purchaseErrorDialog();
-                }
-            }else{
-                // no billing V3
-                MenuItem item = mMenu.findItem(R.id.action_upgrade);
-                assert item != null;
-                item.setVisible(false);
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (Exception e){
-            purchaseErrorDialog();
-        }
-
-
-    }
+//    private void purchase(){
+//
+//
+//        try {
+//            int response = mService.isBillingSupported(3,getPackageName(),"inapp");
+//            if(response == 0) {
+//                //has billing
+//                String SKU = getString(R.string.premium_product_id);
+//                try {
+//                    Bundle buyIntentBundle = mService.getBuyIntent(3, context.getPackageName(),
+//                            SKU, "inapp", null);
+//                    PendingIntent pendingIntent = buyIntentBundle.getParcelable("BUY_INTENT");
+//                    assert pendingIntent != null;
+//                    startIntentSenderForResult(pendingIntent.getIntentSender(),
+//                            1001, new Intent(), 0, 0, 0);
+//                } catch (RemoteException e) {
+//                    e.printStackTrace();
+//                } catch (IntentSender.SendIntentException e) {
+//                    e.printStackTrace();
+//                } catch (Exception e){
+//                    purchaseErrorDialog();
+//                }
+//            }else{
+//                // no billing V3
+//                MenuItem item = mMenu.findItem(R.id.action_upgrade);
+//                assert item != null;
+//                item.setVisible(false);
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        } catch (Exception e){
+//            purchaseErrorDialog();
+//        }
+//
+//
+//    }
 
 
 
@@ -673,119 +673,119 @@ public class CollectionActivity extends FragmentActivity {
      * @param resultCode
      * @param data
      */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1001) {
-            String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");
-            int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
-            String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
-
-            if (resultCode == RESULT_OK) {
-                try {
-
-                    JSONObject jo = new JSONObject(purchaseData);
-                    String sku = jo.getString("productId");
-                    Log.i(TAG,"You have bought the " + sku + ". Excellent choice,adventurer!");
-
-                    //Upgrade the app if the sku matched the upgrade package
-                    if(sku.equals(getString(R.string.premium_product_id))) {
-
-                        // May return null if EasyTracker has not yet been initialized with a
-                        // property ID.
-                        EasyTracker easyTracker = EasyTracker.getInstance(this);
-
-                        easyTracker.send(MapBuilder
-                                        .createTransaction(jo.getString("orderId"), // (String) Transaction ID
-                                                "In-app Store",   // (String) Affiliation
-                                                0.99d,            // (Double) Order revenue
-                                                0.0d,            // (Double) Tax
-                                                0.0d,             // (Double) Shipping
-                                                "USD")            // (String) Currency code
-                                        .build()
-                        );
-
-                        easyTracker.send(MapBuilder
-                                        .createItem(jo.getString("orderId"),               // (String) Transaction ID
-                                                "Premium Upgrade",      // (String) Product name
-                                                "premium",                  // (String) Product SKU
-                                                "Paid Upgrade",        // (String) Product category
-                                                0.99d,                    // (Double) Product price
-                                                1L,                       // (Long) Product quantity
-                                                "USD")                    // (String) Currency code
-                                        .build()
-                        );
-
-                        //Set the premium flag
-                        SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putBoolean("premiumStatus", true);
-                        editor.commit();
-
-                        //Remove the upgrade menu
-                        MenuItem item = mMenu.findItem(R.id.action_upgrade);
-                        assert item != null;
-                        item.setVisible(false);
-
-                        //Remove the ads
-                        adMobBannerInitiate();
-
-                        //Show complete dialog
-                        purchaseCompleteDialog();
-                    }
-
-                }
-                catch (JSONException e) {
-                    Log.i(TAG,"Failed to parse purchase data.");
-                    purchaseErrorDialog();
-                    e.printStackTrace();
-                }
-                catch (Exception e){
-                    purchaseErrorDialog();
-                }
-            }
-        }
-    }
-
-
-
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == 1001) {
+//            String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");
+//            int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
+//            String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
+//
+//            if (resultCode == RESULT_OK) {
+//                try {
+//
+//                    JSONObject jo = new JSONObject(purchaseData);
+//                    String sku = jo.getString("productId");
+//                    Log.i(TAG,"You have bought the " + sku + ". Excellent choice,adventurer!");
+//
+//                    //Upgrade the app if the sku matched the upgrade package
+//                    if(sku.equals(getString(R.string.premium_product_id))) {
+//
+//                        // May return null if EasyTracker has not yet been initialized with a
+//                        // property ID.
+//                        EasyTracker easyTracker = EasyTracker.getInstance(this);
+//
+//                        easyTracker.send(MapBuilder
+//                                        .createTransaction(jo.getString("orderId"), // (String) Transaction ID
+//                                                "In-app Store",   // (String) Affiliation
+//                                                0.99d,            // (Double) Order revenue
+//                                                0.0d,            // (Double) Tax
+//                                                0.0d,             // (Double) Shipping
+//                                                "USD")            // (String) Currency code
+//                                        .build()
+//                        );
+//
+//                        easyTracker.send(MapBuilder
+//                                        .createItem(jo.getString("orderId"),               // (String) Transaction ID
+//                                                "Premium Upgrade",      // (String) Product name
+//                                                "premium",                  // (String) Product SKU
+//                                                "Paid Upgrade",        // (String) Product category
+//                                                0.99d,                    // (Double) Product price
+//                                                1L,                       // (Long) Product quantity
+//                                                "USD")                    // (String) Currency code
+//                                        .build()
+//                        );
+//
+//                        //Set the premium flag
+//                        SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
+//                        SharedPreferences.Editor editor = settings.edit();
+//                        editor.putBoolean("premiumStatus", true);
+//                        editor.commit();
+//
+//                        //Remove the upgrade menu
+//                        MenuItem item = mMenu.findItem(R.id.action_upgrade);
+//                        assert item != null;
+//                        item.setVisible(false);
+//
+//                        //Remove the ads
+//                        adMobBannerInitiate();
+//
+//                        //Show complete dialog
+//                        purchaseCompleteDialog();
+//                    }
+//
+//                }
+//                catch (JSONException e) {
+//                    Log.i(TAG,"Failed to parse purchase data.");
+//                    purchaseErrorDialog();
+//                    e.printStackTrace();
+//                }
+//                catch (Exception e){
+//                    purchaseErrorDialog();
+//                }
+//            }
+//        }
+//    }
+//
 
 
 
 
-    private void purchaseCompleteDialog(){
-
-            //Create the upgrade dialog
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.upgrade_complete_dialog_title))
-                    .setMessage(getString(R.string.upgrade_complete_dialog_body_text))
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with upgrade
-
-                        }
-                    })
-                    .setIcon(R.drawable.ic_action_dark_important)
-                    .show();
-
-    }
 
 
-    private void purchaseErrorDialog(){
+//    private void purchaseCompleteDialog(){
+//
+//            //Create the upgrade dialog
+//            new AlertDialog.Builder(this)
+//                    .setTitle(getString(R.string.upgrade_complete_dialog_title))
+//                    .setMessage(getString(R.string.upgrade_complete_dialog_body_text))
+//                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // continue with upgrade
+//
+//                        }
+//                    })
+//                    .setIcon(R.drawable.ic_action_dark_important)
+//                    .show();
+//
+//    }
 
-        //Create the upgrade dialog
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.upgrade_error_dialog_title))
-                .setMessage(getString(R.string.upgrade_error_dialog_body_text))
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with upgrade
 
-                    }
-                })
-                .setIcon(R.drawable.ic_action_dark_important)
-                .show();
-
-    }
+//    private void purchaseErrorDialog(){
+//
+//        //Create the upgrade dialog
+//        new AlertDialog.Builder(this)
+//                .setTitle(getString(R.string.upgrade_error_dialog_title))
+//                .setMessage(getString(R.string.upgrade_error_dialog_body_text))
+//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // continue with upgrade
+//
+//                    }
+//                })
+//                .setIcon(R.drawable.ic_action_dark_important)
+//                .show();
+//
+//    }
 
 
 
@@ -793,87 +793,87 @@ public class CollectionActivity extends FragmentActivity {
     /**
      * check purchased items
      */
-    private void checkPurchases() {
-
-        Bundle ownedItems = null;
-        try {
-            ownedItems = mService.getPurchases(3, getPackageName(), "inapp", null);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        assert ownedItems != null;
-        int response = ownedItems.getInt("RESPONSE_CODE");
-        if (response == 0) {
-            ArrayList<String> ownedSkus =
-                    ownedItems.getStringArrayList("INAPP_PURCHASE_ITEM_LIST");
-            ArrayList<String>  purchaseDataList =
-                    ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
-
-            assert purchaseDataList != null;
-
-            SharedPreferences settings =
-                    getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
-
-            for (int i = 0; i < purchaseDataList.size(); ++i) {
-
-                String sku = ownedSkus.get(i);
-                Log.i(TAG,sku);
-
-                // String purchaseData = purchaseDataList.get(i);
-                // Log.i(TAG,purchaseData);
-
-                //check and apply the premium purchase
-                if(sku.equals(getString(R.string.premium_product_id))) {
-
-                    //Check if the flag is not set, if true set the flag and reinit AdMob
-                    if(!settings.getBoolean("premiumStatus", false)) {
-                        //Set the premium flag
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putBoolean("premiumStatus", true);
-                        editor.commit();
-
-                        //Remove the ads
-                        adMobBannerInitiate();
-                    }
-
-                }
-
-                //Check and remove the test package
-//                if(sku.equals("android.test.purchased")){
-//                    try {
+//    private void checkPurchases() {
 //
-//                        //Consume the order
-//                        int cResponse = mService.consumePurchase(3, getPackageName(), "inapp:com.mardox.mathtricks:android.test.purchased");
-//                        Log.i(TAG,"consume response: "+cResponse);
+//        Bundle ownedItems = null;
+//        try {
+//            ownedItems = mService.getPurchases(3, getPackageName(), "inapp", null);
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
 //
-//                        if(cResponse==0) {
-//                            //reset the sharedprefrences
-//                            SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
-//                            SharedPreferences.Editor editor = settings.edit();
-//                            editor.putBoolean("premiumStatus", false);
-//                            editor.commit();
+//        assert ownedItems != null;
+//        int response = ownedItems.getInt("RESPONSE_CODE");
+//        if (response == 0) {
+//            ArrayList<String> ownedSkus =
+//                    ownedItems.getStringArrayList("INAPP_PURCHASE_ITEM_LIST");
+//            ArrayList<String>  purchaseDataList =
+//                    ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
 //
-//                            //Enable the ads
-//                            adMobBannerInitiate();
-//                            adMobInterstitialInitiate();
-//                        }
+//            assert purchaseDataList != null;
 //
-//                    } catch (RemoteException e) {
-//                        e.printStackTrace();
+//            SharedPreferences settings =
+//                    getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
+//
+//            for (int i = 0; i < purchaseDataList.size(); ++i) {
+//
+//                String sku = ownedSkus.get(i);
+//                Log.i(TAG,sku);
+//
+//                // String purchaseData = purchaseDataList.get(i);
+//                // Log.i(TAG,purchaseData);
+//
+//                //check and apply the premium purchase
+//                if(sku.equals(getString(R.string.premium_product_id))) {
+//
+//                    //Check if the flag is not set, if true set the flag and reinit AdMob
+//                    if(!settings.getBoolean("premiumStatus", false)) {
+//                        //Set the premium flag
+//                        SharedPreferences.Editor editor = settings.edit();
+//                        editor.putBoolean("premiumStatus", true);
+//                        editor.commit();
+//
+//                        //Remove the ads
+//                        adMobBannerInitiate();
 //                    }
+//
 //                }
-
-                // do something with this purchase information
-                // e.g. display the updated list of products owned by user
-            }
-
-            // if continuationToken != null, call getPurchases again
-            // and pass in the token to retrieve more items
-        }
-
-    }
-
+//
+//                //Check and remove the test package
+////                if(sku.equals("android.test.purchased")){
+////                    try {
+////
+////                        //Consume the order
+////                        int cResponse = mService.consumePurchase(3, getPackageName(), "inapp:com.mardox.mathtricks:android.test.purchased");
+////                        Log.i(TAG,"consume response: "+cResponse);
+////
+////                        if(cResponse==0) {
+////                            //reset the sharedprefrences
+////                            SharedPreferences settings = getSharedPreferences(CollectionActivity.PREFS_NAME, MODE_MULTI_PROCESS);
+////                            SharedPreferences.Editor editor = settings.edit();
+////                            editor.putBoolean("premiumStatus", false);
+////                            editor.commit();
+////
+////                            //Enable the ads
+////                            adMobBannerInitiate();
+////                            adMobInterstitialInitiate();
+////                        }
+////
+////                    } catch (RemoteException e) {
+////                        e.printStackTrace();
+////                    }
+////                }
+//
+//                // do something with this purchase information
+//                // e.g. display the updated list of products owned by user
+//            }
+//
+//            // if continuationToken != null, call getPurchases again
+//            // and pass in the token to retrieve more items
+//        }
+//
+//    }
+//
 
     /**
      * appOfferDialog Dialog
@@ -908,7 +908,7 @@ public class CollectionActivity extends FragmentActivity {
                 int randomDay = 1 + (int)(Math.random()*3);
                 if(!premium_status && randomDay == 1) {
                     //Upgrade offer
-                    upgradeDialog();
+//                    upgradeDialog();
                 }else if(!dont_show_rate_again && randomDay == 2){
                     rateDialog(editor);
                 }
@@ -922,27 +922,27 @@ public class CollectionActivity extends FragmentActivity {
 
 
 
-    private void upgradeDialog(){
-
-        //Create the upgrade dialog
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.upgrade_offer_title))
-                .setMessage(getString(R.string.upgrade_offer_text))
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with upgrade
-                        purchase();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(R.drawable.ic_action_dark_important)
-                .show();
-
-    }
+//    private void upgradeDialog(){
+//
+//        //Create the upgrade dialog
+//        new AlertDialog.Builder(this)
+//                .setTitle(getString(R.string.upgrade_offer_title))
+//                .setMessage(getString(R.string.upgrade_offer_text))
+//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // continue with upgrade
+//                        purchase();
+//                    }
+//                })
+//                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // do nothing
+//                    }
+//                })
+//                .setIcon(R.drawable.ic_action_dark_important)
+//                .show();
+//
+//    }
 
 
     private void rateDialog(final SharedPreferences.Editor editor){

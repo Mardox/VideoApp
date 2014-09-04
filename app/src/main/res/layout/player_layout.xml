@@ -6,6 +6,8 @@
                 android:orientation="vertical"
                 tools:context=".MainActivity"
                 android:background="@android:color/background_dark" >
+
+
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
@@ -18,13 +20,25 @@
             <!--ads:testDevices="TEST_EMULATOR, 6d37195d-a3c7-466b-ae56-9e6d6d25a5b5"-->
             <!--ads:loadAdOnCreate="true"/>-->
     </LinearLayout>
-    <RelativeLayout android:layout_width="match_parent"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
         <com.google.android.youtube.player.YouTubePlayerView
+            android:visibility="gone"
             android:id="@+id/youtubeplayerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_alignParentTop="true"/>
+
+        <WebView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
+
     </RelativeLayout>
 
 
