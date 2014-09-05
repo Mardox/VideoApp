@@ -130,7 +130,7 @@ public class MenuFunctions {
 
      public static boolean settings(Context context){
 
-        final ArrayList<Integer> mSelectedItems  = new ArrayList<Integer>();  // Where we track the selected items
+        final ArrayList mSelectedItems  = new ArrayList();  // Where we track the selected items
         boolean[] ticked = new boolean[10];
         final SharedPreferences prefs = context.getSharedPreferences(CollectionActivity.PREFS_NAME, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = prefs.edit();

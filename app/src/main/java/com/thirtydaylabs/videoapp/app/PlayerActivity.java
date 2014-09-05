@@ -99,6 +99,16 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
             adMobInterstitialInitiate();
         }
 
+
+        initiatePlayer();
+
+
+    }
+
+
+
+    private void initiatePlayer(){
+
         if(YouTubeIntents.isYouTubeInstalled(context)){
 
             // display youtube player
@@ -131,8 +141,9 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
 
         }
 
-
     }
+
+
 
 
     private void adMobInterstitialInitiate(){
@@ -210,10 +221,22 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        initiatePlayer();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         // The rest of your onStop() code.
         EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        myWebView.loadUrl("about:blank");
     }
 
     //COverride the back button

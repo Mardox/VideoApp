@@ -44,6 +44,7 @@ search : videos?q=hooman majd
     <string name="PublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8oC5S0MucP7VA3vIiGiXTdHSdp3teFyKmBj6sZJ254ogTieCFa/yPhqajKgVvQyrN3uSPe1CIWm9UkPedHeLX/jR2EEgSm4/npOkmQoKhp/RJjV8Su7WrGq2TCUJJMHJDdTwv62wmkVdLVWTjp67jpHK6MmQZhTOifVqaOhb5wseeYhP0UWxsWvssTM1RpR2mshtVvmqSdK034LrV3lmRYsORGYbsRPsL/NdwzurE11ZK4Au5YdRMuvLWseqKoLlsbWgUQFQOeSd8E8waKmiVlllKfjO+GZF09qXRWP0OReiuVLbrXtQ1lJEMwlaDHZtihWaLVio1/aqFYYulhA+QIDAQAB</string>
 
     <string name="developer">ModernApps</string>
+    <string name="youtube_apikey">AIzaSyD_P7EU5zgFeN64LUWmOMB7FrQlIQJXbZU</string>
     <string name="email">support@30DayLabs.com</string>
 
 </resources>

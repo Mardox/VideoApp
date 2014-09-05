@@ -947,8 +947,6 @@ public class CollectionActivity extends FragmentActivity {
 
     private void rateDialog(final SharedPreferences.Editor editor){
 
-        final String APP_PNAME = getPackageName();
-
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.rate_offer_title))
                 .setItems(R.array.rating_response, new DialogInterface.OnClickListener() {
@@ -958,7 +956,7 @@ public class CollectionActivity extends FragmentActivity {
                         switch (which) {
                             case 0:
                                 //Rate Now
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                                MenuFunctions.openRate(context);
                             case 1:
                                 //Rate Later
                             case 2:

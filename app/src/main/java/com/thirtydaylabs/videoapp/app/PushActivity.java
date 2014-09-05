@@ -24,6 +24,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,6 +121,12 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         // display youtube player
         adMobInterstitialInitiate();
 
+        initiatePlayer();
+
+    }
+
+
+    private void initiatePlayer(){
 
         if(YouTubeIntents.isYouTubeInstalled(context)){
 
@@ -128,6 +135,8 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             youTubePlayerView.setVisibility(View.VISIBLE);
 
         }else{
+
+
             myWebView.setVisibility(View.VISIBLE);
             myWebView.setWebChromeClient(new WebChromeClient());
             myWebView.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
@@ -141,8 +150,16 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             myWebView.setHorizontalScrollBarEnabled(false);
             //myWebView.loadUrl(playerURL);
             myWebView.loadData(playVideo, "text/html", "utf-8");
+            WebViewClient client = new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    Log.d("MYAPP", "Page loaded");
+                }
+            };
+            myWebView.setWebViewClient(client);
 
         }
+
     }
 
 
@@ -218,7 +235,12 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         super.onStart();
         // The rest of your onStart() code.
         EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initiatePlayer();
     }
 
 
@@ -232,8 +254,14 @@ public class PushActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 
     @Override
-    public void onDestroy()
-    {
+    protected void onPause() {
+        super.onPause();
+        myWebView.loadUrl("about:blank");
+    }
+
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
         finish();
     }
